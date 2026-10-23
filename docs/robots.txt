@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://suspectsx.github.io/catcalc/sitemap.xml
