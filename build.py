@@ -65,10 +65,10 @@ def layout(path, title, desc, body, schema=None):
 <link rel="stylesheet" href="{rel('/assets/style.css')}">
 {head_extra}</head><body>
 <header class="top"><div class="wrap"><a class="logo" href="{rel('/')}">🐱 {e(NAME)}</a>
-<nav><a href="{rel('/cat-age-calculator/')}">Age</a><a href="{rel('/cat-calorie-calculator/')}">Calories</a><a href="{rel('/can-cats-eat/')}">Can cats eat…?</a><a href="{rel('/cat-name-generator/')}">Names</a></nav></div></header>
+<nav><a href="{rel('/cat-age-calculator/')}">Age</a><a href="{rel('/cat-calorie-calculator/')}">Calories</a><a href="{rel('/can-cats-eat/')}">Can cats eat…?</a><a href="{rel('/cat-name-generator/')}">Names</a><a href="{rel('/cat-care-planner/')}">Shop</a></nav></div></header>
 <main class="wrap">{body}{product_box()}</main>
 <footer><div class="wrap"><p>{e(NAME)} provides general information only and is not a substitute for veterinary advice. If you think your cat ate something toxic, call your vet, the ASPCA Animal Poison Control Center (888-426-4435, fee may apply) or Pet Poison Helpline (855-764-7661).</p>
-<p><a href="{rel('/about/')}">About</a> · <a href="{rel('/privacy/')}">Privacy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
+<p><a href="{rel('/cat-care-planner/')}">Shop</a> · <a href="{rel('/about/')}">About</a> · <a href="{rel('/contact/')}">Contact</a> · <a href="{rel('/terms/')}">Terms</a> · <a href="{rel('/privacy/')}">Privacy</a> · <a href="{rel('/refund-policy/')}">Refund Policy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
 </body></html>"""
     d = os.path.join(OUT, path.strip("/"))
     os.makedirs(d, exist_ok=True)
@@ -84,7 +84,8 @@ def home():
     cards = [("/cat-age-calculator/", "🎂 Cat Age Calculator", "Convert your cat's age to human years using the AAHA/AAFP formula, plus life stage."),
              ("/cat-calorie-calculator/", "🍽️ Cat Calorie & Food Calculator", "How many calories and grams of food your cat needs per day."),
              ("/can-cats-eat/", "🥕 Can Cats Eat…?", f"Quick yes / no / caution answers for {len(FOODS)} common human foods."),
-             ("/cat-name-generator/", "✨ Cat Name Generator", "Hundreds of name ideas: orange, black, Halloween, food and cute names.")]
+             ("/cat-name-generator/", "✨ Cat Name Generator", "Hundreds of name ideas: orange, black, Halloween, food and cute names."),
+             ("/cat-care-planner/", "🎃 Printable Cat Care Planner ($7)", "22-page PDF to track vet visits, vaccines, weight, feeding, meds and expenses.")]
     c = "".join(f'<a class="card" href="{rel(p)}"><h2>{t}</h2><p>{d}</p></a>' for p, t, d in cards)
     toxic = ", ".join(f'<a href="{rel("/can-cats-eat/"+s+"/")}">{e(n)}</a>' for s, n, v, *_ in FOODS if v == "no")
     body = f"""<section class="hero"><h1>Free, simple tools for cat owners</h1>
@@ -182,21 +183,87 @@ def namesp():
 <script src="{rel('/assets/tools.js')}"></script>"""
     layout("/cat-name-generator/", "Cat Name Generator: Cute, Orange, Black & Halloween Cat Names", "Free cat name generator with hundreds of cute, funny, orange, black, food and Halloween cat names for boys and girls.", body)
 
+SELLER = "an independent creator based in China"
+def contact_p():
+    m = C["contact_email"]
+    return f'<a href="mailto:{e(m)}">{e(m)}</a>'
+
 def about():
-    em = f'<p>Contact: <a href="mailto:{e(C["contact_email"])}">{e(C["contact_email"])}</a></p>' if C.get("contact_email") else ""
-    layout("/about/", f"About {NAME}", f"About {NAME}, a set of free tools for cat owners.",
-           f"<h1>About {e(NAME)}</h1><p>{e(NAME)} is a small, independent site run by cat lovers who also make short cat videos. We build quick, free tools that answer everyday cat-care questions, based on published veterinary guidelines (AAHA/AAFP, ASPCA). We are not veterinarians, and nothing here replaces advice from your own vet.</p>{em}")
+    layout("/about/", f"About {NAME}", f"About {NAME}, free tools and printables for cat owners.",
+           f"""<h1>About {e(NAME)}</h1><p>{e(NAME)} is a small website run by {SELLER} who loves cats and makes short cat videos (the "Pumpkin Cat" series). It offers free, quick tools that answer everyday cat-care questions, based on published veterinary guidelines (AAHA/AAFP, ASPCA).</p>
+<p>The site also sells one digital product, the <a href="{rel('/cat-care-planner/')}">printable Cat Care Planner</a>. There are no physical products and nothing is shipped.</p>
+<p>We are not veterinarians. Nothing on this site replaces advice from your own vet.</p>
+<p>Contact: {contact_p()}</p>""")
+
+def contact():
+    layout("/contact/", f"Contact | {NAME}", f"How to contact {NAME}.",
+           f"""<h1>Contact</h1><p>For questions about the site, the Cat Care Planner, an order, or a refund, email {contact_p()}.</p>
+<p>Please include your order number if your question is about a purchase. We usually reply within 2 business days. The site is run by one person in China (UTC+8), so replies may arrive outside US business hours.</p>""")
+
+def terms():
+    layout("/terms/", f"Terms of Service | {NAME}", f"Terms of service for {NAME} and its digital products.",
+           f"""<h1>Terms of Service</h1><p>Last updated: {TODAY}</p>
+<p>These terms apply to {e(NAME)} ({e(URL)}) and to digital products sold through it. The site is operated by {SELLER}. Contact: {contact_p()}.</p>
+<h2>Free tools and information</h2><p>The calculators and articles are free and provided for general information only. They are not veterinary advice. Always ask your veterinarian about your cat's health, and contact a vet or pet poison hotline in an emergency.</p>
+<h2>Digital products</h2><p>Products are downloadable PDF files. No physical item is shipped. Orders are processed by our online reseller and payment provider, which acts as the merchant of record and handles payment, taxes and invoices. Its own terms also apply to your purchase.</p>
+<h2>License</h2><p>When you buy a product you get a personal, non-transferable license to download, print and use it for your own household as many times as you like. You may not resell, share, redistribute or claim the files as your own.</p>
+<h2>Refunds</h2><p>See our <a href="{rel('/refund-policy/')}">Refund Policy</a>.</p>
+<h2>Liability</h2><p>The site and products are provided "as is". To the extent permitted by law, we are not liable for indirect or consequential losses arising from using the site or products. Nothing in these terms limits rights you have under consumer protection laws that apply to you.</p>
+<h2>Changes</h2><p>We may update these terms. The date above shows the latest version.</p>""")
+
+def refund():
+    layout("/refund-policy/", f"Refund Policy | {NAME}", f"Refund policy for {NAME} digital products.",
+           f"""<h1>Refund Policy</h1><p>Last updated: {TODAY}</p>
+<p>Our products are digital downloads, so we can't take them back once they are delivered. We still want you to be happy with your purchase.</p>
+<h2>When you can get a refund</h2><p>Within <strong>14 days</strong> of purchase, you can ask for a full refund if:</p>
+<ul><li>the file is defective, such as corrupted, won't open or is missing pages, and we can't fix it by sending you a working copy; or</li><li>the product is materially not as described on its product page.</li></ul>
+<h2>How to request one</h2><p>Email {contact_p()} with your order number and a short description of the problem, plus a screenshot if you can. We usually reply within 2 business days. Approved refunds go back to your original payment method through our payment provider.</p>
+<h2>Other cases</h2><p>Because files can't be returned, we don't normally refund a change of mind after download. Your statutory consumer rights are not affected.</p>""")
 
 def privacy():
-    ads = "<h2>Advertising</h2><p>We use Google AdSense to show ads. Google and its partners use cookies to serve ads based on your prior visits to this and other websites. You can opt out of personalized advertising at <a href=\"https://adssettings.google.com\" rel=\"noopener\">Google Ads Settings</a> or <a href=\"https://www.aboutads.info\" rel=\"noopener\">aboutads.info</a>. See <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener\">how Google uses data from partner sites</a>.</p>"
-    aff = "<h2>Affiliate links</h2><p>Some links are affiliate links. As an Amazon Associate we earn from qualifying purchases, at no extra cost to you.</p>"
+    ads = "<h2>Advertising</h2><p>We use Google AdSense to show ads. Google and its partners use cookies to serve ads based on your prior visits to this and other websites. You can opt out of personalized advertising at <a href=\"https://adssettings.google.com\" rel=\"noopener\">Google Ads Settings</a> or <a href=\"https://www.aboutads.info\" rel=\"noopener\">aboutads.info</a>. See <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener\">how Google uses data from partner sites</a>.</p>" if C.get("adsense_publisher_id") else ""
+    aff = "<h2>Affiliate links</h2><p>Some links are affiliate links. As an Amazon Associate we earn from qualifying purchases, at no extra cost to you.</p>" if C.get("amazon_associates_tag") else ""
     layout("/privacy/", f"Privacy Policy | {NAME}", f"Privacy policy for {NAME}.",
-           f"<h1>Privacy Policy</h1><p>Last updated: {TODAY}</p><p>All calculators run in your browser. We do not ask for accounts and do not store what you type into the tools.</p>{ads}{aff}<h2>Contact</h2><p>Questions about this policy can be sent to the contact address on the About page.</p>")
+           f"""<h1>Privacy Policy</h1><p>Last updated: {TODAY}</p><p>This site is operated by {SELLER}.</p>
+<h2>Tools</h2><p>All calculators run in your browser. We do not ask for accounts and do not store what you type into the tools.</p>
+<h2>Hosting</h2><p>The site is hosted on GitHub Pages, which may log basic technical data such as IP addresses for security. See GitHub's privacy statement.</p>
+<h2>Purchases</h2><p>If you buy a product, our payment provider (the merchant of record) collects your name, email, billing details and payment information to process the order. We receive your name, email and order details so we can deliver the product and provide support. We do not see or store your full card details, and we do not sell your personal data.</p>
+<h2>Emails</h2><p>If you email us, we use your address only to reply.</p>{ads}{aff}
+<h2>Your choices</h2><p>You can ask us to access or delete the personal data we hold about you by emailing {contact_p()}.</p>""")
+
+PLANNER = ["Cat Profile: microchip, breed, food, likes and quirks, with a photo spot", "Emergency Contacts, with the US pet poison hotline numbers already printed",
+  "Vet Visit Log, plus a Vaccination & Flea/Worm Prevention Record", "Weight Tracker, plus a 12-month Weight Chart grid",
+  "Weekly Daily Feeding Log and Water & Litter Box Log", "Undated Monthly Calendar", "Medication Tracker", "Daily Health Check (14 quick checks, Mon–Sun)",
+  '"When to Call the Vet" warning-signs page', "Grooming & Dental Log", "New Food & Treat Trial Log", "Monthly Expenses Tracker and Yearly Budget Summary",
+  "Toxic Foods Quick Reference (Never / Caution / Generally Safe), ready to stick on the fridge", "Toxic Plants & Household Hazards (lilies, medicines, essential oils and more)",
+  "Pet Sitter Info Sheet", "Dotted Notes page"]
+
+def planner():
+    imgs = "".join(f'<img src="{rel("/assets/img/"+f)}" alt="{a}" width="1200" height="1200" loading="lazy">' for f, a in
+                   [("01-cover.jpg", "Cat Care Planner cover and cat profile page"), ("02-inside.jpg", "Inside pages: vet log, weight tracker, feeding log, calendar"), ("03-toxic-foods.jpg", "Toxic foods quick reference and household hazards pages")])
+    lis = "".join(f"<li>{e(x)}</li>" for x in PLANNER)
+    schema = {"@context": "https://schema.org", "@type": "Product", "name": "Cat Care Planner – Printable PDF (Pumpkin Cat Edition)",
+              "image": [URL + "/assets/img/01-cover.jpg"], "description": "22-page printable cat health, vet and feeding tracker. US Letter and A4.",
+              "offers": {"@type": "Offer", "price": "7.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder"}}
+    body = f"""<p class="crumbs"><a href="{rel('/')}">Home</a> › Shop</p>
+<div class="prod"><div class="gallery">{imgs}</div><div class="buy">
+<h1>Cat Care Planner – Printable Cat Health, Vet &amp; Feeding Tracker</h1>
+<p class="lead">Keep vet visits, vaccines, weight, meds and expenses for your cat in one cute, organized place.</p>
+<p class="price">$7 <span class="small">USD · instant digital download (PDF)</span></p>
+<button class="btn" disabled aria-disabled="true">Coming soon – launching this week</button>
+<p class="small">22 pages · US Letter (8.5 × 11 in) + A4 · undated · personal-use license · no physical item ships</p></div></div>
+<h2>About this planner</h2><p>Your cat can't tell you when something's off, but a written record can. The Cat Care Planner (Pumpkin Cat Edition) is a 22-page printable PDF that keeps all of your cat's health and care information in one place, so vet visits are easier and small changes don't slip by.</p>
+<p>Print it at home, put it in a binder, or use it in GoodNotes or any PDF app. It comes in both US Letter and A4, and you can reprint the log pages as often as you need.</p>
+<h2>What's inside</h2><ul>{lis}</ul>
+<h2>Details</h2><ul><li>Format: ZIP file with 2 PDFs (US Letter and A4)</li><li>Delivery: instant download after purchase</li><li>License: personal use, print as many copies as you need for your own household</li><li>Refunds: see our <a href="{rel('/refund-policy/')}">Refund Policy</a> (14 days for defective or not-as-described files)</li><li>Questions: {contact_p()}</li></ul>
+<p class="small">This planner is an organizing tool, not veterinary advice.</p>"""
+    layout("/cat-care-planner/", "Printable Cat Care Planner (PDF) – Vet, Weight & Feeding Tracker", "22-page printable cat care planner: vet visit log, vaccines, weight chart, feeding and litter logs, medication tracker, expenses and toxic foods list. US Letter + A4.", body, schema)
 
 def assets():
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for f in ("style.css", "tools.js"):
         shutil.copy(os.path.join(ROOT, "src", f), os.path.join(OUT, "assets", f))
+    shutil.copytree(os.path.join(ROOT, "src", "img"), os.path.join(OUT, "assets", "img"))
 
 def seo_files():
     sm = "".join(f"<url><loc>{e(u)}</loc><lastmod>{TODAY}</lastmod></url>" for u in pages)
@@ -211,5 +278,5 @@ def seo_files():
 if __name__ == "__main__":
     if os.path.exists(OUT): shutil.rmtree(OUT)
     os.makedirs(OUT)
-    home(); age(); calories(); foods(); namesp(); about(); privacy(); assets(); seo_files()
+    home(); age(); calories(); foods(); namesp(); about(); contact(); terms(); refund(); privacy(); planner(); assets(); seo_files()
     print(f"Built {len(pages)} pages into {OUT}")

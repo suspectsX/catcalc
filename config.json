@@ -2,7 +2,7 @@
   "_README": "Fill these in, then run: python3 build.py   (output goes to ./docs). Empty string = feature hidden.",
   "site_name": "CatCalc",
   "site_url": "https://suspectsx.github.io/catcalc",
-  "contact_email": "",
+  "contact_email": "tianxiemoyu@gmail.com",
   "adsense_publisher_id": "",
   "_adsense_hint": "Looks like ca-pub-1234567890123456. When set, AdSense auto-ads script + ads.txt are generated.",
   "amazon_associates_tag": "",
