@@ -29,6 +29,30 @@ def cat(draw, x, y, scale=1, color=ORANGE):
         draw.line([box((stripe,-57)),box((stripe-4,-36))], fill=INK, width=max(2,round(4*scale)))
 
 
+SRC_ART = Path(__file__).resolve().parent / 'assets' / 'illustrations'
+
+
+def final_art(name):
+    """Export final illustration from scripts/assets/illustrations/<name>.jpg if present."""
+    src = SRC_ART / f'{name}.jpg'
+    if not src.exists():
+        return False
+    widths = (600, 1200) if name == 'home-cat-tools' else (480, 960)
+    ratio = 2 if name == 'home-cat-tools' else 16 / 9
+    with Image.open(src) as im:
+        im = im.convert('RGB')
+        w, h = im.size
+        if w / h < ratio:
+            nh = round(w / ratio); top = (h - nh) // 2
+            im = im.crop((0, top, w, top + nh))
+        else:
+            nw = round(h * ratio); left = (w - nw) // 2
+            im = im.crop((left, 0, left + nw, h))
+        for width in widths:
+            im.resize((width, round(width / ratio)), Image.Resampling.LANCZOS).save(ART / f'{name}-{width}.webp', quality=86, method=6)
+    return True
+
+
 def placeholder(name):
     size = (1200, 600) if name == 'home-cat-tools' else (960, 540)
     canvas = Image.new('RGB', size, BG)
@@ -100,6 +124,7 @@ def export_products():
 if __name__ == '__main__':
     for name in ('home-cat-tools','home-food-awareness','cat-age-hero','cat-life-stages',
                  'cat-calorie-hero','cat-food-measurements','cat-name-ideas','cat-food-guide'):
-        placeholder(name)
+        if not final_art(name):
+            placeholder(name)
     export_products()
-    print('Prepared 8 placeholder illustrations and 9 product WebP sources.')
+    print('Prepared 8 illustrations (final art where available) and 9 product WebP sources.')

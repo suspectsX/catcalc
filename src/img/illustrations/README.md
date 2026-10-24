@@ -1,8 +1,11 @@
 ﻿# Illustration placeholders and product image provenance
 
-The eight illustrations are original geometric placeholders drawn with Pillow by
-`scripts/prepare_images.py`. They are intentionally simple, contain no medical
-approval marks, and are not finished commissioned art. Their English alt text and
+The eight illustrations are final flat-style art featuring Pumpkin (orange tabby,
+knitted pumpkin hat; palette #E8772E / #F7C99B / outline #4A3428), generated with an
+image model and checked by eye for artifacts and stray text. Full-size sources live in
+`scripts/assets/illustrations/<name>.jpg`; `scripts/prepare_images.py` crops them to
+2:1 (home-cat-tools, 600/1200) or 16:9 (others, 480/960) and writes the WebP files
+here. If a source is missing, the script falls back to a Pillow geometric placeholder. Their English alt text and
 placement follow review section 3.2. The source JPG product previews remain the
 original supplied assets; they are drafts and are not verified against a final PDF.
 
