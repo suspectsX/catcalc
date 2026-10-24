@@ -2,35 +2,44 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cat Calorie Calculator: How Much Should I Feed My Cat?</title>
-<meta name="description" content="Free cat calorie calculator using the vet RER formula. Find daily kcal and grams or cups of wet or dry food for kittens, adults and weight loss.">
+<meta name="description" content="Estimate daily cat calories with RER and a life-stage factor. Convert food-label calories to a starting food allowance and include treats in the total.">
 <link rel="canonical" href="https://vonsoh.com/cat-calorie-calculator/">
-<meta property="og:title" content="Cat Calorie Calculator: How Much Should I Feed My Cat?"><meta property="og:description" content="Free cat calorie calculator using the vet RER formula. Find daily kcal and grams or cups of wet or dry food for kittens, adults and weight loss.">
+<meta property="og:title" content="Cat Calorie Calculator: How Much Should I Feed My Cat?"><meta property="og:description" content="Estimate daily cat calories with RER and a life-stage factor. Convert food-label calories to a starting food allowance and include treats in the total.">
 <meta property="og:type" content="website"><meta property="og:url" content="https://vonsoh.com/cat-calorie-calculator/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://vonsoh.com/assets/img/01-cover-coming-soon.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="1200">
+<meta property="og:image:alt" content="Cat Care Planner preview, coming soon">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://vonsoh.com/assets/img/01-cover-coming-soon.jpg"><meta name="twitter:image:alt" content="Cat Care Planner preview, coming soon">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 <link rel="stylesheet" href="/assets/style.css">
+<script defer src="/assets/tools.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2862042170007829" crossorigin="anonymous"></script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many calories does a cat need per day?", "acceptedAnswer": {"@type": "Answer", "text": "A typical 4.5 kg (10 lb) neutered indoor adult cat needs roughly 215-260 kcal per day (inactive to neutered-adult factor), but needs vary. The calculator uses RER = 70 x (weight in kg)^0.75 multiplied by a life-stage factor."}}, {"@type": "Question", "name": "How much wet or dry food should I feed my cat?", "acceptedAnswer": {"@type": "Answer", "text": "Divide your cat's daily calorie needs by the calories in the food (printed on the bag or can as kcal/kg, kcal/cup or kcal/can)."}}, {"@type": "Question", "name": "How many treats can a cat have?", "acceptedAnswer": {"@type": "Answer", "text": "A common veterinary rule of thumb is to keep treats under 10% of daily calories."}}]}</script>
-</head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many calories does a cat need per day?", "acceptedAnswer": {"@type": "Answer", "text": "A typical 4.5 kg (10 lb) neutered indoor adult cat needs roughly 215-260 kcal per day (inactive to neutered-adult factor), but needs vary. The calculator uses RER = 70 x (weight in kg)^0.75 multiplied by a life-stage factor."}}, {"@type": "Question", "name": "How much wet or dry food should I feed my cat?", "acceptedAnswer": {"@type": "Answer", "text": "Divide your cat's daily calorie needs by the calories in the food (printed on the bag or can as kcal/kg, kcal/cup or kcal/can)."}}, {"@type": "Question", "name": "How many treats can a cat have?", "acceptedAnswer": {"@type": "Answer", "text": "Keep treats under about 10% of the total daily calorie budget. Subtract treat calories from the food allowance rather than adding them on top."}}]}</script>
+</head><body><a class="skip" href="#content">Skip to content</a>
 <header class="top"><div class="wrap"><a class="logo" href="/">🐱 CatCalc</a>
-<nav><a href="/cat-age-calculator/">Age</a><a href="/cat-calorie-calculator/">Calories</a><a href="/can-cats-eat/">Can cats eat…?</a><a href="/cat-name-generator/">Names</a><a href="/cat-care-planner/">Shop</a></nav></div></header>
-<main class="wrap"><h1>Cat Calorie Calculator & Daily Food Amount</h1>
+<nav aria-label="Main"><a href="/cat-age-calculator/">Age</a><a href="/cat-calorie-calculator/" aria-current="page">Calories</a><a href="/can-cats-eat/">Can cats eat…?</a><a href="/cat-name-generator/">Names</a><a href="/cat-care-planner/">Shop</a></nav></div></header>
+<main class="wrap" id="content"><h1>Cat Calorie Calculator & Daily Food Amount</h1>
 <p class="lead">Estimate how many calories your cat needs and how much of your food to serve.</p>
-<div class="tool" id="cal-tool">
-<label>Weight <input type="number" id="cw" min="0.3" max="15" step="0.1" value="4.5">
-<select id="cu"><option value="kg">kg</option><option value="lb">lb</option></select></label>
-<label>Cat type <select id="cf">
-<option value="1.2">Neutered / spayed adult</option><option value="1.4">Intact adult</option>
-<option value="1.0">Inactive indoor or weight-gain prone</option><option value="0.8">Weight loss (use ideal weight)</option>
-<option value="2.5">Kitten (under 1 year)</option></select></label>
-<label>Food calories (optional) <input type="number" id="ck" min="0" step="1" placeholder="e.g. 3800">
-<select id="ckunit"><option value="kg">kcal per kg</option><option value="cup">kcal per cup</option><option value="can">kcal per can</option></select></label>
-<button class="btn" id="cgo">Calculate</button>
-<div class="result" id="cres" aria-live="polite"></div></div><div class="ad-slot" aria-hidden="true"></div>
+<picture class="illustration tool-art intro-art"><source type="image/webp" srcset="/assets/img/illustrations/cat-calorie-hero-480.webp 480w, /assets/img/illustrations/cat-calorie-hero-960.webp 960w" sizes="(max-width: 600px) 160px, 320px"><img src="/assets/img/illustrations/cat-calorie-hero-480.webp" width="960" height="540" loading="eager" decoding="async" alt="An orange cat beside a pet scale and a kitchen scale for food."></picture>
+<form class="tool" id="cal-tool" novalidate>
+<label for="cw">Weight</label><div class="input-unit"><input type="number" id="cw" min="0.3" max="15" step="any" value="4.5" required aria-describedby="weight-range">
+<select id="cu" aria-label="Weight unit"><option value="kg">kg</option><option value="lb">lb</option></select></div>
+<p class="small" id="weight-range">Supported range: 0.3–15 kg. Ask your vet about weights outside this calculator's range.</p>
+<label for="cf">Cat type</label><select id="cf">
+<option value="1.2">Neutered / spayed</option><option value="1.4">Intact adult</option>
+<option value="1.0">Inactive adult</option><option value="0.8">Weight loss</option>
+<option value="2.5">Kitten under 1 year</option></select>
+<p class="small">For weight loss, use ideal weight with your vet's guidance.</p>
+<label for="ck">Food calories (optional)</label><div class="input-unit"><input type="number" id="ck" min="1" max="10000" step="1" placeholder="e.g. 3800" aria-describedby="food-range">
+<select id="ckunit" aria-label="Food calorie unit"><option value="kg">kcal/kg</option><option value="cup">kcal/cup</option><option value="can">kcal/can</option></select></div>
+<p class="small" id="food-range">Copy the label: 1–10000 kcal/kg, whole numbers. Leave blank to skip food conversion.</p>
+<button type="submit" class="btn" id="cgo">Calculate</button><p class="error" id="cerror" role="alert"></p>
+<div class="result" id="cres" aria-live="polite"></div></form>
 <h2>The formula</h2><p>Vets start from the <strong>Resting Energy Requirement</strong>: RER = 70 × (body weight in kg)<sup>0.75</sup>. This is multiplied by a factor for life stage and activity, for example 1.2 for a neutered adult or 0.8 for weight loss. These are starting points; adjust based on your cat's body condition and ask your vet, especially for weight loss, pregnancy or illness.</p>
-<h2>FAQ</h2><h3>How many calories does a cat need per day?</h3><p>A typical 4.5 kg (10 lb) neutered indoor adult cat needs roughly 215-260 kcal per day (inactive to neutered-adult factor), but needs vary. The calculator uses RER = 70 x (weight in kg)^0.75 multiplied by a life-stage factor.</p><h3>How much wet or dry food should I feed my cat?</h3><p>Divide your cat&#x27;s daily calorie needs by the calories in the food (printed on the bag or can as kcal/kg, kcal/cup or kcal/can).</p><h3>How many treats can a cat have?</h3><p>A common veterinary rule of thumb is to keep treats under 10% of daily calories.</p>
+<p class="small">Source: <a href="https://www.aaha.org/resources/2021-aaha-nutrition-and-weight-management-guidelines/">AAHA nutrition and weight management guidelines</a>. The estimate is a starting point, not an individual feeding prescription. Treats are part of the total budget.</p>
+<picture class="illustration tool-art "><source type="image/webp" srcset="/assets/img/illustrations/cat-food-measurements-480.webp 480w, /assets/img/illustrations/cat-food-measurements-960.webp 960w" sizes="(max-width: 600px) 284px, 320px"><img src="/assets/img/illustrations/cat-food-measurements-480.webp" width="960" height="540" loading="lazy" decoding="async" alt="A kitchen scale, measuring cup and wet food can used to measure cat food."></picture>
+<h2>FAQ</h2><h3>How many calories does a cat need per day?</h3><p>A typical 4.5 kg (10 lb) neutered indoor adult cat needs roughly 215-260 kcal per day (inactive to neutered-adult factor), but needs vary. The calculator uses RER = 70 x (weight in kg)^0.75 multiplied by a life-stage factor.</p><h3>How much wet or dry food should I feed my cat?</h3><p>Divide your cat&#x27;s daily calorie needs by the calories in the food (printed on the bag or can as kcal/kg, kcal/cup or kcal/can).</p><h3>How many treats can a cat have?</h3><p>Keep treats under about 10% of the total daily calorie budget. Subtract treat calories from the food allowance rather than adding them on top.</p>
 
-<script src="/assets/tools.js"></script></main>
+</main>
 <footer><div class="wrap"><p>CatCalc provides general information only and is not a substitute for veterinary advice. If you think your cat ate something toxic, call your vet, the ASPCA Animal Poison Control Center (888-426-4435, fee may apply) or Pet Poison Helpline (855-764-7661).</p>
 <p><a href="/cat-care-planner/">Shop</a> · <a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refund-policy/">Refund Policy</a> · © 2026 CatCalc</p></div></footer>
 </body></html>
