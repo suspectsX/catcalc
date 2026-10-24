@@ -270,6 +270,8 @@ def seo_files():
     open(os.path.join(OUT, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>\n')
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {URL}/sitemap.xml\n")
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
+    if C.get("custom_domain"):
+        open(os.path.join(OUT, "CNAME"), "w").write(C["custom_domain"] + "\n")
     pub = C.get("adsense_publisher_id", "")
     if pub:
         open(os.path.join(OUT, "ads.txt"), "w").write(f"google.com, {pub.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n")

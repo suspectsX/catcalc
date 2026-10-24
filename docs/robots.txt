@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://suspectsx.github.io/catcalc/sitemap.xml
+Sitemap: https://vonsoh.com/sitemap.xml
