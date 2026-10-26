@@ -69,7 +69,7 @@ def layout(path, title, desc, body, schema=None, not_found=False):
     share_image = URL + '/assets/img/01-cover-coming-soon.jpg'
     doc = f"""<!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="p:domain_verify" content="42383cf36e5ced7bb33c391f2d966076"/>
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 {canonical}
