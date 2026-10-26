@@ -283,7 +283,7 @@ def planner():
             imgs += f'<aside class="box preview-warning"><strong>Outdated draft reference — not feeding advice.</strong><p>Cooked bones: do not feed. Raw fish and eggs: cook first. Cat-specific evidence for grapes, raisins and xylitol is limited. Use the <a href="{rel("/can-cats-eat/")}">updated food guide</a> for the current conclusions. This original preview has not been rewritten as a new PDF page.</p></aside>'
         imgs += f'<a href="{base}.jpg" aria-label="View full-size preview: {e(alt)}"><picture><source type="image/webp" srcset="{base}-480.webp 480w, {base}-800.webp 800w, {base}-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), 436px"><img src="{base}.jpg" alt="{e(alt)}" width="1200" height="1200" loading="{"eager" if i == 0 else "lazy"}" decoding="async"></picture></a>'
     lis = "".join(f"<li>{e(x)}</li>" for x in PLANNER)
-    schema = {"@context": "https://schema.org", "@type": "Product", "name": "Cat Care Planner – Printable PDF (Pumpkin Cat Edition)",
+    schema = {"@context": "https://schema.org", "@type": "WebPage", "url": URL + "/cat-care-planner/", "name": "Cat Care Planner – Printable PDF (Pumpkin Cat Edition)",
               "image": [URL + "/assets/img/01-cover-coming-soon.jpg"], "description": PLANNER_STATUS + ". Preview of a planned 22-page printable care tracker."}
     body = f"""<p class="crumbs"><a href="{rel('/')}">Home</a> › Shop</p>
 <div class="prod"><div class="gallery">{imgs}</div><div class="buy">
