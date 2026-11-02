@@ -110,6 +110,7 @@ for file in sorted(OUT.rglob('*.html')):
     if path == '/cat-care-planner/':
         require(page.tags['img'][0]['loading'] == 'eager', 'first product image lazy')
         require('offers' not in page.json[0], 'product must not have Offer')
+        require(any(m.get('name')=='robots' and 'noindex' in m.get('content','') for m in page.tags['meta']), 'planner should be noindex')
 
 for kind, counter in [('title',titles),('description',descriptions)]:
     for value, count in counter.items():
@@ -119,7 +120,7 @@ for path, sources in inbound.items():
 
 ns = {'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 urls = ET.parse(OUT/'sitemap.xml').getroot().findall('s:url',ns)
-if len(urls) != 58 or len(pages) != 59: errors.append(f'expected 58 sitemap URLs and 59 HTML files, got {len(urls)} and {len(pages)}')
+if len(urls) != 57 or len(pages) != 59: errors.append(f'expected 57 sitemap URLs and 59 HTML files (planner noindex), got {len(urls)} and {len(pages)}')
 for entry in urls:
     path = entry.find('s:loc',ns).text.removeprefix(SITE)
     date = entry.find('s:lastmod',ns)

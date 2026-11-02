@@ -25,3 +25,5 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:18px 0;color:var
 @media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover,.btn:active{transform:none}}
 
 main p,main li{max-width:70ch}.hero p{margin-left:auto;margin-right:auto}h1,h2,h3,.card p,.lead{text-wrap:pretty}
+
+.checklist{list-style:none;padding-left:0}.checklist li{margin:8px 0;padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:8px}

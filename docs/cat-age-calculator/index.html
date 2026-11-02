@@ -6,9 +6,9 @@
 <link rel="canonical" href="https://vonsoh.com/cat-age-calculator/">
 <meta property="og:title" content="Cat Age Calculator: Cat Years to Human Years (Chart)"><meta property="og:description" content="Estimate cat years in human years with an informal approximation. Includes a 1-20 year chart, worked examples and separately sourced cat life stage definitions.">
 <meta property="og:type" content="website"><meta property="og:url" content="https://vonsoh.com/cat-age-calculator/">
-<meta property="og:image" content="https://vonsoh.com/assets/img/01-cover-coming-soon.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="1200">
-<meta property="og:image:alt" content="Cat Care Planner preview, coming soon">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://vonsoh.com/assets/img/01-cover-coming-soon.jpg"><meta name="twitter:image:alt" content="Cat Care Planner preview, coming soon">
+<meta property="og:image" content="https://vonsoh.com/assets/img/illustrations/home-cat-tools-1200.webp"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="1200">
+<meta property="og:image:alt" content="CatCalc free cat tools: age, calories and food safety">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://vonsoh.com/assets/img/illustrations/home-cat-tools-1200.webp"><meta name="twitter:image:alt" content="CatCalc free cat tools: age, calories and food safety">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 <link rel="stylesheet" href="/assets/style.css">
 <script defer src="/assets/tools.js"></script>
@@ -16,7 +16,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How old is my cat in human years?", "acceptedAnswer": {"@type": "Answer", "text": "This informal approximation uses about 15 human years at age 1, 24 at age 2, then 4 more per cat year. It is not a clinical measurement or an endorsed AAHA/AAFP formula."}}, {"@type": "Question", "name": "What are the life stages of a cat?", "acceptedAnswer": {"@type": "Answer", "text": "Kitten: birth to 1 year. Young adult: 1-6 years. Mature adult: 7-10 years. Senior: over 10 years (2021 AAHA/AAFP Feline Life Stage Guidelines)."}}, {"@type": "Question", "name": "How long do indoor cats live?", "acceptedAnswer": {"@type": "Answer", "text": "Many indoor cats live into their mid-teens, and some reach 20 or more. Regular vet checks become more important from the senior stage."}}, {"@type": "Question", "name": "Why does my kitten's age jump so fast in human years?", "acceptedAnswer": {"@type": "Answer", "text": "Cats mature quickly in the first two years. The chart front-loads that development, then uses a steadier four-human-year step. It is a teaching aid, not a biological clock."}}, {"@type": "Question", "name": "Should I change food when the calculator says \"senior\"?", "acceptedAnswer": {"@type": "Answer", "text": "Life stage is a reminder to talk with your vet about exam frequency and diet. Do not switch medical or senior diets based only on an online chart."}}]}</script>
 </head><body><a class="skip" href="#content">Skip to content</a>
 <header class="top"><div class="wrap"><a class="logo" href="/">🐱 CatCalc</a>
-<nav aria-label="Main"><a href="/cat-age-calculator/" aria-current="page">Age</a><a href="/cat-calorie-calculator/">Calories</a><a href="/can-cats-eat/">Can cats eat…?</a><a href="/cat-name-generator/">Names</a><a href="/guides/">Guides</a><a href="/cat-care-planner/">Shop (coming soon)</a></nav></div></header>
+<nav aria-label="Main"><a href="/cat-age-calculator/" aria-current="page">Age</a><a href="/cat-calorie-calculator/">Calories</a><a href="/can-cats-eat/">Can cats eat…?</a><a href="/cat-name-generator/">Names</a><a href="/guides/">Guides</a></nav></div></header>
 <main class="wrap" id="content"><h1>Cat Age Calculator: Cat Years to Human Years</h1>
 <p class="lead">Enter your cat's age to see the human equivalent and life stage.</p>
 <picture class="illustration tool-art intro-art"><source type="image/webp" srcset="/assets/img/illustrations/cat-age-hero-480.webp 480w, /assets/img/illustrations/cat-age-hero-960.webp 960w" sizes="(max-width: 600px) 160px, 320px"><img src="/assets/img/illustrations/cat-age-hero-480.webp" width="960" height="540" loading="eager" decoding="async" alt="An orange tabby growing from kitten to adult beside a calendar."></picture>
@@ -30,12 +30,14 @@
 <p>People ask for a single “cat year to human year” number because it makes life stages easier to talk about. Cats do not age on a human calendar, but a transparent chart still helps owners notice when kitten care should give way to adult maintenance, and when senior monitoring becomes more important.</p>
 <p>CatCalc uses a widely shared <strong>informal approximation</strong>: the first year counts as about <strong>15</strong> human years, the second year brings the total to about <strong>24</strong>, and each year after that adds about <strong>4</strong> human years. Ages under one year are interpolated from typical kitten development so a 3-month-old kitten does not show the same result as a 1-year-old.</p>
 <p>This is <strong>not</strong> a clinical geriatric assessment, not a dental aging method, and not an AAHA/AAFP–endorsed conversion formula. The life-stage labels we show beside the result come from a <em>separate</em> source—the 2021 AAHA/AAFP feline life stage definitions—so we do not pretend the arithmetic and the guidelines are one document.</p>
-<h2>Worked examples</h2>
+<h2>Worked examples (same math as the calculator)</h2>
+<p>These match the live JavaScript on this page. Try the same inputs to verify.</p>
 <ul>
-<li><strong>8-month-old kitten:</strong> under one year, so the tool scales toward the 15-human-year mark at 12 months. Expect a result well below 15, with a kitten life stage.</li>
-<li><strong>2-year-old adult:</strong> about 24 human years on this chart, labeled young adult.</li>
-<li><strong>12-year-old:</strong> 24 + 4×10 = 64 human years on this chart, labeled senior. Use that label as a prompt for twice-yearly exams if your vet agrees—not as a diagnosis.</li>
+<li><strong>0 years, 8 months:</strong> age under 1 year uses the kitten interpolation table. At 8 months the script returns about <strong>12 human years</strong>, life stage <strong>Kitten</strong>.</li>
+<li><strong>2 years, 0 months:</strong> after year two the chart is 24 human years → about <strong>24 human years</strong>, life stage <strong>Young adult</strong>.</li>
+<li><strong>12 years, 0 months:</strong> 24 + 4×(12−2) = <strong>64 human years</strong>, life stage <strong>Senior</strong>. Use that label as a prompt for more frequent exams if your vet agrees—not as a diagnosis.</li>
 </ul>
+<p class="small">Empty fields, non-numbers, years outside 0–35, or months outside 0–11 show an inline error and do not invent a result. Months must be whole numbers.</p>
 <h2>Cat age chart</h2><table><caption>Approximate human-year equivalents</caption><thead><tr><th scope="col">Cat age (years)</th><th scope="col">Human age (years)</th></tr></thead><tbody><tr><td>1</td><td>15</td></tr><tr><td>2</td><td>24</td></tr><tr><td>3</td><td>28</td></tr><tr><td>4</td><td>32</td></tr><tr><td>5</td><td>36</td></tr><tr><td>6</td><td>40</td></tr><tr><td>7</td><td>44</td></tr><tr><td>8</td><td>48</td></tr><tr><td>9</td><td>52</td></tr><tr><td>10</td><td>56</td></tr><tr><td>11</td><td>60</td></tr><tr><td>12</td><td>64</td></tr><tr><td>13</td><td>68</td></tr><tr><td>14</td><td>72</td></tr><tr><td>15</td><td>76</td></tr><tr><td>16</td><td>80</td></tr><tr><td>17</td><td>84</td></tr><tr><td>18</td><td>88</td></tr><tr><td>19</td><td>92</td></tr><tr><td>20</td><td>96</td></tr></tbody></table>
 <picture class="illustration tool-art "><source type="image/webp" srcset="/assets/img/illustrations/cat-life-stages-480.webp 480w, /assets/img/illustrations/cat-life-stages-960.webp 960w" sizes="(max-width: 600px) 284px, 320px"><img src="/assets/img/illustrations/cat-life-stages-480.webp" width="960" height="540" loading="lazy" decoding="async" alt="Four illustrations showing a cat at different life stages."></picture><p class="small">Life stages: kitten, young adult, mature adult and senior.</p>
 <h2>Life stages in plain language</h2>
@@ -47,5 +49,5 @@
 
 </main>
 <footer><div class="wrap"><p>CatCalc provides general information only and is not a substitute for veterinary advice. If you think your cat ate something toxic, call your vet, the ASPCA Animal Poison Control Center (888-426-4435, fee may apply) or Pet Poison Helpline (855-764-7661).</p>
-<p><a href="/guides/">Guides</a> · <a href="/cat-care-planner/">Shop</a> · <a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refund-policy/">Refund Policy</a> · © 2026 CatCalc</p></div></footer>
+<p><a href="/guides/">Guides</a> · <a href="/about/">About</a> · <a href="/cat-care-planner/">Planner preview</a> · <a href="/contact/">Contact</a> · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refund-policy/">Refund Policy</a> · © 2026 CatCalc</p></div></footer>
 </body></html>

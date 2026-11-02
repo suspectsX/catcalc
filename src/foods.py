@@ -111,25 +111,103 @@ def related_foods(slug):
     return [by_slug[s] for s in dict.fromkeys(selected) if s != slug]
 
 FOOD_SOURCES = {
- "xylitol": [("ASPCApro: xylitol differences in cats and dogs", "https://www.aspcapro.org/resource/most-common-sleep-aid-toxicities-cats-and-dogs"), ("Small cat study (2018)", "https://pubmed.ncbi.nlm.nih.gov/29430681/")],
+ "chocolate": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: chocolate", "https://www.petpoisonhelpline.com/poison/chocolate/"),
+  ("VCA: chocolate poisoning overview", "https://vcahospitals.com/know-your-pet/chocolate-poisoning"),
+ ],
+ "onions": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: onion", "https://www.petpoisonhelpline.com/poison/onion/"),
+ ],
+ "garlic": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: onion (Allium family)", "https://www.petpoisonhelpline.com/poison/onion/"),
+ ],
+ "chives": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: onion (Allium family)", "https://www.petpoisonhelpline.com/poison/onion/"),
+ ],
+ "grapes": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: grapes", "https://www.petpoisonhelpline.com/poison/grapes/"),
+ ],
+ "raisins": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: grapes (includes raisins/currants context)", "https://www.petpoisonhelpline.com/poison/grapes/"),
+ ],
+ "alcohol": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "coffee": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "raw-dough": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "xylitol": [
+  ("ASPCApro: xylitol differences in cats and dogs", "https://www.aspcapro.org/resource/most-common-sleep-aid-toxicities-cats-and-dogs"),
+  ("Small cat study (2018)", "https://pubmed.ncbi.nlm.nih.gov/29430681/"),
+  ("Pet Poison Helpline: xylitol", "https://www.petpoisonhelpline.com/poison/xylitol/"),
+ ],
+ "avocado": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+  ("Pet Poison Helpline: avocado", "https://www.petpoisonhelpline.com/poison/avocado/"),
+ ],
+ "bones": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "milk": [
+  ("Pet Poison Helpline: milk", "https://www.petpoisonhelpline.com/poison/milk/"),
+  ("Cornell Feline Health Center: feeding your cat", "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat"),
+ ],
+ "cheese": [
+  ("Pet Poison Helpline: milk (lactose context)", "https://www.petpoisonhelpline.com/poison/milk/"),
+ ],
+ "yogurt": [
+  ("Pet Poison Helpline: milk (lactose context)", "https://www.petpoisonhelpline.com/poison/milk/"),
+ ],
+ "tuna": [
+  ("Cornell Feline Health Center: feeding your cat", "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat"),
+  ("WSAVA Global Nutrition Guidelines", "https://wsava.org/global-guidelines/global-nutrition-guidelines/"),
+ ],
+ "chicken": [
+  ("Cornell Feline Health Center: feeding your cat", "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat"),
+  ("WSAVA Global Nutrition Guidelines", "https://wsava.org/global-guidelines/global-nutrition-guidelines/"),
+ ],
+ "cooked-eggs": [
+  ("ASPCA: people foods to avoid (raw eggs / salmonella context)", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "raw-eggs": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "raw-fish": [
+  ("ASPCA: people foods to avoid", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "cucumber": [
+  ("ASPCA: people foods to avoid (context for unsafe seasonings)", "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"),
+ ],
+ "peanut-butter": [
+  ("Pet Poison Helpline: xylitol", "https://www.petpoisonhelpline.com/poison/xylitol/"),
+  ("ASPCApro: xylitol differences in cats and dogs", "https://www.aspcapro.org/resource/most-common-sleep-aid-toxicities-cats-and-dogs"),
+ ],
 }
 
-# Extra original paragraphs shown on each food detail page (accuracy over hype).
 FOOD_EXTRA = {
- 'chocolate': 'Baking chocolate and dark chocolate contain more theobromine per gram than milk chocolate. Wrappers, brownie batter and cocoa powder count too. Cats are small; even a lick is still worth a professional call.',
- 'onions': 'Onion powder is easy to miss in leftover soup, baby food and seasoning blends. Cooking does not make Allium plants safe for cats.',
- 'garlic': 'Garlic salt, garlic oil and savory broth concentrates are common hidden sources. Treat any Allium exposure as something to discuss with a vet, not a wait-and-see experiment.',
+ 'chocolate': 'Baking chocolate and dark chocolate contain more theobromine per gram than milk chocolate. Wrappers, brownie batter, cocoa powder, mocha drinks and sugar-free chocolate that also contains xylitol all count as exposures. Seasoned or filled chocolates add fat and other ingredients but do not make theobromine safer. Cats are small; even a lick is still worth a professional call rather than a wait-and-see experiment.',
+ 'onions': 'Onion powder, onion salt, fried onions, soup bases and baby food with onion are easy to miss. Cooking, drying or powdering does not make Allium plants safe for cats. Compared with chives or garlic, the hazard theme is the same—red blood cell damage—while the form on a human plate often looks too small to matter.',
+ 'garlic': 'Garlic salt, garlic oil, garlic powder and savory broth concentrates are common hidden sources. Garlic is often described as more potent than onion on a weight basis among Allium foods, which is why leftover takeout and seasoned meats are frequent accidental exposures. Treat any intentional sharing of garlic-seasoned food as a vet call, not a home experiment.',
  'chives': 'Chives often appear as a garnish. The concern is the Allium family effect on red blood cells, similar in theme to onion and garlic, even when the portion looks tiny on a human plate.',
- 'grapes': 'Because cat-specific toxicity data are limited, CatCalc does not invent a toxic dose for cats. We still advise against offering grapes and prompt veterinary contact after ingestion.',
- 'raisins': 'Raisin bread, trail mix and cereal clusters can combine raisins with xylitol, chocolate or other human ingredients. Bring the package to the call if you can.',
+ 'grapes': 'Because cat-specific toxicity data are limited, CatCalc does not invent a toxic dose for cats. We still advise against offering grapes and prompt veterinary contact after ingestion. Fresh fruit, chopped fruit cups and just-one-grape training treats are the usual household routes; dogs have a clearer kidney-injury record, and that uncertainty is not permission to feed cats.',
+ 'raisins': 'Raisin bread, trail mix and cereal clusters can combine raisins with chocolate, xylitol or macadamia ingredients. Dried fruit is easy to underestimate by volume. Bring the package to the call if you can. As with grapes, we do not invent a cat-specific toxic dose.',
  'alcohol': 'Uncooked yeast dough, some sauces and spilled drinks are easy ways cats encounter alcohol. Size matters: a small body reaches a dangerous dose quickly.',
  'coffee': "Coffee grounds in compost bins and chewable caffeine tablets are higher-risk than a cold sip of milky coffee, but none of these belong in a cat's reach.",
  'raw-dough': 'Expansion plus alcohol production is the dual hazard. Bread that is fully baked is a different question (see the bread page) and still offers little nutrition.',
- 'xylitol': 'Check peanut butter, syrups, gum and dental products. CatCalc refuses to paste dog-toxicity talking points onto cats without noting the limited feline evidence.',
- 'milk': 'Lactose-free cat milk products exist as treats; they are still treats. Growing orphans need commercial kitten milk replacer under proper guidance.',
- 'cheese': 'Lactose is lower than in milk, but fat and salt are not free. Medication hiding in cheese should be vet-approved for that drug and that cat.',
+ 'xylitol': 'Check peanut butter, syrups, gum, mints, dental products and some baked goods. Dog hypoglycemia talking points should not be pasted onto cats without noting the limited feline evidence. Mixed products may also contain chocolate or other hazards—read the full ingredient list for the hotline call.',
+ 'milk': "Lactose-free cat milk products exist as treats; they are still treats, not a hydration strategy. Growing orphans need commercial kitten milk replacer under proper guidance, never cow's milk as a substitute. Flavored coffee creamers and chocolate milk add caffeine or theobromine risks on top of lactose.",
+ 'cheese': 'Lactose is lower than in milk, but fat and salt are not free. Soft cheese, hard cheese and cheese sauces differ; sauces often hide onion or garlic. Medication hiding in cheese should be vet-approved for that drug and that cat. A pea-sized nibble is the usual outer bound people discuss—not a cheese board.',
  'yogurt': 'Fruit-on-the-bottom cups, chocolate swirls and sugar-free products with polyols are the usual traps. Plain and unsweetened is the only version worth discussing.',
- 'tuna': 'A tuna-only diet can contribute to nutritional imbalance over time. Rotate complete cat foods as the staple; keep tuna as a high-value training bit.',
+ 'tuna': 'A tuna-only diet can contribute to nutritional imbalance over time. Human canned tuna in brine is salty; oil-packed tuna adds fat. Fish bones in some products are a separate injury risk. Rotate complete cat foods as the staple; keep tuna as a high-value training bit in spring water when you use it at all.',
  'raw-fish': 'Thiaminase in some raw fish and pathogen risk are separate issues from cooked, deboned fish treats. Freezing at home is not a guarantee of safety.',
  'raw-eggs': 'Cooking addresses the main practical risks for household sharing. Seasonings afterward can reintroduce onion or salt problems.',
  'bones': 'Cooked bones are brittle. If a bone is stuck or the cat struggles to breathe, that is emergency care—not an internet search.',
@@ -140,10 +218,10 @@ FOOD_EXTRA = {
  'bread': 'Plain bread is mostly starch. Garlic bread, seeded breads with toxic mix-ins and raw dough each need their own caution.',
  'banana': 'Cats lack a sweet taste receptor for sugar the way humans do; most shrug at banana. Tiny portions avoid unnecessary sugar load.',
  'apples': 'Core and seeds are the parts to remove. Flesh is the only section we discuss as an optional tiny treat.',
- 'chicken': 'Rotisserie seasonings, onion gravy and cooked bones undo the benefit. Plain leftover breast meat is the template.',
+ 'chicken': 'Rotisserie seasonings, onion gravy, barbecue sauce and cooked bones undo the benefit of an otherwise suitable lean meat. Plain leftover breast or thigh meat, cooled and shredded, is the template. Raw chicken is a different question (pathogens)—this page is about cooked plain chicken as a small treat.',
  'turkey': 'Holiday leftovers are where garlic, onions, stuffing raisins and bones sneak in. Serve a plain cut piece only.',
  'salmon': 'Fish is still a treat relative to a complete diet. Bones and heavy seasoning are the usual mistakes.',
- 'cooked-eggs': "Eggs are nutrient-dense; a whole egg may be too many calories for a small cat's treat budget. Share a bite, not a breakfast plate.",
+ 'cooked-eggs': "Eggs are nutrient-dense; a whole egg may be too many calories for a small cat's treat budget. Share a bite, not a breakfast plate. Butter, milk, cheese, onion powder or chili oil in scrambled eggs reintroduce problems covered on other pages. Raw eggs are covered separately because of pathogen and avidin concerns.",
  'shrimp': 'Shells and tails are choking hazards. Garlic butter restaurant shrimp is not the same as plain boiled shrimp.',
  'pumpkin': 'Plain puree is not the same as pie filling. Persistent constipation or diarrhea needs a vet, not endless pumpkin experiments.',
  'blueberries': 'Cut berries reduce choking risk for enthusiastic gulpers. Most cats are indifferent; that is fine.',
@@ -151,10 +229,109 @@ FOOD_EXTRA = {
  'strawberries': 'Remove leafy tops. Sugary fruit is optional; complete cat food remains the staple.',
  'cantaloupe': 'Some cats investigate melon aroma. Rind and seeds still go in the compost, not the bowl.',
  'carrots': 'Hard raw chunks are a choking risk. Soft, plain, cut pieces are the only form we describe as a small treat.',
- 'cucumber': 'Mostly water and novelty. Peel if waxed; slice thin.',
+ 'cucumber': 'Cucumber is mostly water and novelty for cats that bother to try it. Peel if the skin is waxed; slice thin to reduce gulping. Pickled cucumber brings vinegar and salt; seasoned salads often include onion or garlic. Cucumber is not a hydration plan and not a diet food—complete cat food and fresh water remain the basics.',
  'green-beans': 'A few cats accept them as low-calorie training bits. Butter and garlic turn a caution-free vegetable into a problem.',
  'peas': 'Common in commercial recipes; plain peas as a rare extra are fine for many cats.',
  'rice': 'Sometimes used short-term in bland diets under veterinary direction. It is not a protein substitute.',
  'oatmeal': 'Cook thoroughly with water. Sweeteners, milk and sugar-free syrups do not belong in the pot.',
  'catnip': 'Response is partly genetic. Toys stuffed with catnip should be sized so the cat cannot swallow string or plastic.',
 }
+
+# Food-specific detail sections (trusted HTML). Priority foods get deeper original notes.
+FOOD_DETAIL = {
+ "chocolate": [
+  ("Plain vs flavored or filled chocolate",
+   "<p>Plain dark or baking chocolate is usually higher in theobromine per gram than milk chocolate. Fillings, nuts, coffee flavoring or liqueur add extra hazards but never cancel methylxanthine risk. “White chocolate” is lower in theobromine than dark chocolate yet still unhelpful fat and sugar for cats—and some sugar-free products add xylitol.</p>"),
+  ("What to tell the vet or hotline",
+   "<p>Share the product name, cocoa percentage if known, estimated grams eaten, time since exposure, and your cat’s weight. Mention wrappers or batter if those were chewed. Ask the professional whether monitoring at home or clinic care is needed—do not invent a “safe square” of chocolate.</p>"),
+  ("Compared with coffee or xylitol sweets",
+   "<p>Coffee and tea are caffeine problems; many sugar-free candies are xylitol problems; chocolate can involve theobromine, caffeine, fat and sometimes xylitol together. When the ingredient list is mixed, bring the package rather than guessing which toxin “matters more.”</p>"),
+ ],
+ "onions": [
+  ("Raw, cooked, powdered and leftover sauces",
+   "<p>All common culinary forms matter: raw slices, caramelized onions, onion powder in seasoning blends, and onion in broth or baby food. Heat does not remove the Allium hazard for cats.</p>"),
+  ("What to tell the vet",
+   "<p>Estimate how much onion-containing food was eaten, whether it was powder or fresh, and when. Mention pale gums, weakness, lethargy or dark urine if present—signs can lag. There is no home antidote dose to calculate from a blog.</p>"),
+  ("Compared with garlic and chives",
+   "<p>Garlic and chives are the same Allium family concern. Powdered garlic in leftovers is a frequent hidden source; chives as garnish look tiny on a human plate and still count.</p>"),
+ ],
+ "garlic": [
+  ("Hidden garlic in human food",
+   "<p>Garlic powder, garlic salt, garlic oil, and “savory” broths show up in rotisserie seasoning, noodle cups and leftovers. A cat that licks a garlic-butter plate is an exposure even if no clove was offered on purpose.</p>"),
+  ("What to tell the vet",
+   "<p>Describe the dish, rough amount, time, and any vomiting or lethargy. Bring labels when garlic is one of many ingredients. Do not wait days “to see” if the portion seemed small.</p>"),
+  ("Compared with onions",
+   "<p>Both are Allium plants linked to red blood cell injury in cats. Onion pages and garlic pages exist separately so searchers find either name; the action after ingestion is the same: professional advice, not a homemade dose chart.</p>"),
+ ],
+ "grapes": [
+  ("Fresh fruit vs fruit cups and desserts",
+   "<p>Whole grapes, chopped fruit cups, and desserts that include grapes all count. Raisins are covered on their own page because dried fruit is easy to underestimate and often mixed with other ingredients.</p>"),
+  ("Evidence limits (read before sharing dog advice)",
+   "<p>Kidney injury from grapes and raisins is better documented in dogs. Cat-specific toxic dose data are limited. CatCalc therefore says <em>avoid</em> and <em>call a vet after ingestion</em>—we do not invent a feline “safe number of grapes.”</p>"),
+  ("What to tell the vet",
+   "<p>How many grapes (or how much chopped fruit), approximate time, whether seeds/skin were included, and your cat’s weight. Early calls beat waiting for vomiting or lethargy.</p>"),
+ ],
+ "raisins": [
+  ("Where raisins hide",
+   "<p>Trail mix, oatmeal cookies, cinnamon rolls, and cereal clusters are common sources. Other ingredients (chocolate, xylitol, nuts) may matter as much as the raisin count.</p>"),
+  ("What to tell the vet",
+   "<p>Bring the package. Estimate pieces eaten and time. Say clearly if sugar-free sweeteners appear on the label. As with grapes, we do not provide a cat-specific toxic dose table.</p>"),
+ ],
+ "xylitol": [
+  ("Where xylitol appears",
+   "<p>Sugar-free gum, mints, some peanut butters, syrups, dental products and baked goods may list xylitol or “birch sugar.” If the label is unclear, treat unknown sugar-free products as a hotline question.</p>"),
+  ("Cats are not small dogs",
+   "<p>A small study in healthy cats did not reproduce the classic low-blood-sugar pattern famous in dogs; gastrointestinal upset is still described in feline poison-control summaries. Limited evidence is not a safety claim for every dose, product mix, or sick cat.</p>"),
+  ("What to tell the vet",
+   "<p>Read the full ingredient list aloud, estimate amount chewed or swallowed, and note chocolate or other co-ingestants. Ask whether observation or clinic care is advised—do not induce vomiting on internet advice alone.</p>"),
+ ],
+ "milk": [
+  ("Cow’s milk vs kitten milk replacer",
+   "<p>Most adult cats digest lactose poorly after weaning, so ordinary cow’s milk often causes soft stool or diarrhea. Orphaned kittens need commercial kitten milk replacer and veterinary feeding guidance—not dairy from the fridge.</p>"),
+  ("Lactose-free “cat milk” and flavored drinks",
+   "<p>Lactose-free cat milk products are still optional treats. Chocolate milk, coffee drinks and creamers can add caffeine or theobromine hazards on top of dairy fat.</p>"),
+  ("What to tell the vet after a large drink",
+   "<p>Share volume, milk type, and whether diarrhea or vomiting started. Persistent diarrhea, kitten dehydration, or mixed toxic ingredients deserve a call—not another bowl of milk.</p>"),
+ ],
+ "cheese": [
+  ("Plain cheese vs sauces",
+   "<p>A pea-sized bit of plain cheese is what people usually mean by “a nibble.” Cheese sauces, nacho cheese and seasoned soft cheeses often include onion, garlic or heavy salt.</p>"),
+  ("Fat, salt and medication tricks",
+   "<p>Lower lactose than milk does not make cheese a free food. High fat can upset some cats. Hiding pills in cheese is only appropriate when your vet agrees for that drug and that patient.</p>"),
+  ("Compared with milk and yogurt",
+   "<p>Milk is usually worse for lactose; yogurt must be plain and unsweetened if used at all; cheese concentrates fat and salt. None of these replace a complete cat diet.</p>"),
+ ],
+ "tuna": [
+  ("Spring water vs brine or oil",
+   "<p>Prefer plain tuna in spring water as an occasional high-value bit. Brine adds salt; oil adds fat. Seasoned pouches with broth may hide onion or garlic powder—read labels.</p>"),
+  ("Treat vs staple diet",
+   "<p>Cats may prefer tuna to balanced cat food. Making tuna the main diet risks nutritional gaps over time. Complete commercial cat food (or a vet-designed home-prepared diet) should remain the staple.</p>"),
+  ("What to tell the vet",
+   "<p>If a tuna binge led to vomiting, diarrhea or refusal of normal food, say how much tuna, which packing liquid, and how long tuna has been a large share of calories.</p>"),
+ ],
+ "chicken": [
+  ("Safe parts and preparations",
+   "<p>Plain cooked, boneless, skinless meat is the usual small-treat template. Remove cooked bones (splinter risk). Skip fried coatings, salt, garlic, onion and gravy.</p>"),
+  ("Raw vs cooked",
+   "<p>This page is about cooked chicken. Raw poultry can carry pathogens; raw feeding decisions belong with your veterinarian, not a leftover-sharing tip sheet.</p>"),
+  ("Compared with turkey or ham",
+   "<p>Plain cooked turkey follows similar rules. Ham and bacon are caution foods because of salt and fat. Holiday platters are where bones and seasoned skins sneak in.</p>"),
+ ],
+ "cooked-eggs": [
+  ("Fully cooked, unseasoned only",
+   "<p>Hard-boiled or plain scrambled egg without butter, milk, cheese, salt chili oil or onion powder can be a small treat. Restaurant omelets are not the same food.</p>"),
+  ("Portion and calories",
+   "<p>Eggs are calorie-dense. A bite or two is the usual outer bound for a treat budget; a whole egg may crowd out balanced cat food calories for a small cat.</p>"),
+  ("Compared with raw eggs",
+   "<p>Raw eggs bring pathogen risk and avidin in raw whites that can interfere with biotin absorption when fed routinely. Prefer fully cooked eggs if you share egg at all.</p>"),
+ ],
+ "cucumber": [
+  ("Plain flesh vs pickles and salads",
+   "<p>Peeled, thinly sliced plain cucumber flesh is the only form we describe as a small optional treat. Pickles add salt and vinegar; mixed salads often include onion, garlic or dressing.</p>"),
+  ("How it compares with other produce",
+   "<p>Like many watery vegetables, cucumber is novelty more than nutrition for obligate carnivores. Blueberries or pumpkin have their own pages and still must stay inside treat calories.</p>"),
+  ("When to skip it",
+   "<p>Skip cucumber if your cat has ongoing digestive disease unless your vet says otherwise, and skip any preparation you would not describe as plain and unsalted.</p>"),
+ ],
+}
+

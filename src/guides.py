@@ -11,7 +11,8 @@ GUIDES = [
        "<p>CatCalc is not a clinic. This guide summarizes publicly available poison-control guidance so you can act quickly and choose safer flowers. Always follow your veterinarian's advice for your own cat.</p>"),
       ("Which plants are the problem",
        "<p>Poison-control resources commonly flag <em>Lilium</em> species (Easter, tiger, Asiatic, stargazer, and similar true lilies) and <em>Hemerocallis</em> (daylilies) as highly dangerous to cats. Other plants that people casually call \"lilies\" are not the same species—for example, peace lily and calla lily are different plants with different risk profiles—but they can still cause mouth and stomach irritation. When in doubt, treat an unlabeled \"lily\" bouquet as unsafe until a vet or poison hotline says otherwise.</p>"
-       "<p>Pollen brushed onto fur is a frequent exposure route: cats groom, then swallow pollen. Vase water can also be hazardous if a cat drinks from it. Keeping lilies in a closed room the cat never enters is not a reliable safeguard if pollen or leaves can travel.</p>"),
+       "<p>Pollen brushed onto fur is a frequent exposure route: cats groom, then swallow pollen. Vase water can also be hazardous if a cat drinks from it. Keeping lilies in a closed room the cat never enters is not a reliable safeguard if pollen or leaves can travel.</p>"
+       "<p>Primary references: <a href=\"https://www.petpoisonhelpline.com/poison/lily/\" rel=\"noopener\">Pet Poison Helpline — lily</a>, <a href=\"https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/lily\" rel=\"noopener\">ASPCA Toxic and Non-Toxic Plants — Lily</a>.</p>"),
       ("What to do if your cat may have been exposed",
        "<p>If you suspect contact with a true lily or daylily—chewing a leaf, licking pollen, drinking vase water, or walking through fallen stamens—<strong>contact a veterinarian or pet poison hotline right away</strong>, even if the cat looks fine. Early decontamination and monitoring matter; waiting for vomiting or lethargy can waste critical time.</p>"
        "<ul><li>In the US: ASPCA Animal Poison Control Center 888-426-4435 (fee may apply) or Pet Poison Helpline 855-764-7661.</li>"
@@ -20,9 +21,9 @@ GUIDES = [
        "<p>Do not induce vomiting unless a veterinarian specifically instructs you to. Home remedies can make some poisonings worse.</p>"),
       ("Safer ways to enjoy flowers",
        "<p>If you want cut flowers in a home with cats, prefer varieties that poison-control lists treat as lower risk for cats, and still keep bouquets out of reach. Roses (watch thorns), sunflowers, orchids, and many herbs are commonly suggested as alternatives—but always double-check the specific plant, and avoid any bouquet that mixes in lily stems \"for filler.\"</p>"
-       "<p>Artificial flowers remove the toxin risk entirely. If you receive a gift bouquet containing lilies, move it out of the home or strip those stems before the cat can investigate.</p>"),
+       "<p>Artificial flowers remove the toxin risk entirely. If you receive a gift bouquet containing lilies, move it out of the home or strip those stems before the cat can investigate. Browse the <a href=\"https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants\" rel=\"noopener\">ASPCA plant list</a> before you buy.</p>"),
       ("How this fits with CatCalc tools",
-       "<p>Plant toxins are separate from human-food risks. Use our <a href=\"/can-cats-eat/\">Can Cats Eat…?</a> guide for foods, and keep a written record of incidents and vet advice in a care log (our printable planner is coming later). Quick links: <a href=\"/cat-calorie-calculator/\">calorie calculator</a> if appetite changes after an illness, and <a href=\"/contact/\">contact</a> only for site questions—not emergencies.</p>"),
+       "<p>Plant toxins are separate from human-food risks. Use our <a href=\"/can-cats-eat/\">Can Cats Eat…?</a> guide for foods. Quick links: <a href=\"/cat-calorie-calculator/\">calorie calculator</a> if appetite changes after an illness, <a href=\"/cat-age-calculator/\">age / life stage</a> for senior monitoring reminders, and <a href=\"/contact/\">contact</a> only for site questions—not emergencies.</p>"),
     ],
     "faq": [
       ("Are all plants with \"lily\" in the name equally toxic to cats?",
@@ -41,20 +42,25 @@ GUIDES = [
     "sections": [
       ("Start with the job the food must do",
        "<p>Cat food packaging is designed to sell. Your job is narrower: find a complete diet that fits your cat's life stage, then use the label numbers to portion meals. Cats are obligate carnivores; they need nutrients found in animal tissue (including taurine) that plant-heavy or dog-food formulas may not supply in the right amounts.</p>"
-       "<p>This guide explains the parts of a label that matter for everyday feeding decisions. It does not rank brands or promise weight loss or disease outcomes.</p>"),
+       "<p>This guide explains the parts of a label that matter for everyday feeding decisions. It does not rank brands or promise weight loss or disease outcomes. For broader feeding context see <a href=\"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat\" rel=\"noopener\">Cornell Feline Health Center — Feeding Your Cat</a> and the <a href=\"https://wsava.org/global-guidelines/global-nutrition-guidelines/\" rel=\"noopener\">WSAVA Global Nutrition Guidelines</a>.</p>"),
       ("Nutritional adequacy statement (AAFCO language)",
        "<p>On many bags sold in the US you will see a statement that the food is formulated to meet AAFCO Cat Food Nutrient Profiles, or that it passed a feeding trial, for a named life stage (growth, adult maintenance, or all life stages). That statement is about <em>completeness for the stated stage</em>, not about taste, sustainability claims, or \"human-grade\" marketing.</p>"
        "<p>Kitten growth and reproduction have higher nutrient targets than adult maintenance. An adult-maintenance food is generally not appropriate as the sole diet for growing kittens unless the label (and your vet) say otherwise. If your cat has a medical diet prescribed by a vet, follow that prescription over general label browsing.</p>"),
       ("Guaranteed analysis vs. calories",
        "<p>Guaranteed analysis lists minimums or maximums for crude protein, fat, fiber, and moisture. Those percentages are on an \"as fed\" basis unless a dry-matter conversion is provided. Wet food looks lower in protein percentage than dry food largely because of water—compare thoughtfully or ask your vet how to convert.</p>"
-       "<p>For portioning, the <strong>calorie statement</strong> (kcal per kg, per cup, or per can) is what our <a href=\"/cat-calorie-calculator/\">Cat Calorie Calculator</a> expects. Manufacturers measure metabolizable energy; your calculator estimate is only a starting point. Adjust with body-condition scoring and veterinary guidance.</p>"),
+       "<p>For portioning, the <strong>calorie statement</strong> (kcal per kg, per cup, or per can) is what our <a href=\"/cat-calorie-calculator/\">Cat Calorie Calculator</a> expects. Manufacturers measure metabolizable energy; your calculator estimate is only a starting point. Adjust with body-condition scoring and veterinary guidance. AAHA nutrition and weight-management materials discuss energy needs and body condition in clinic settings: <a href=\"https://www.aaha.org/resources/2021-aaha-nutrition-and-weight-management-guidelines/\" rel=\"noopener\">AAHA nutrition &amp; weight management guidelines</a>.</p>"),
+      ("Worked example: dry-matter protein (demo data)",
+       "<p><strong>Example data only — not a real brand.</strong> Suppose a wet food label shows crude protein 10% (min) and moisture 78% (max) as-fed. Dry matter is roughly 100% − 78% = 22% of the can’s weight. Protein on a dry-matter basis ≈ 10 ÷ 22 × 100 ≈ <strong>45%</strong>.</p>"
+       "<p>Suppose a dry food shows crude protein 32% (min) and moisture 10% (max). Dry matter ≈ 90%. Protein on a dry-matter basis ≈ 32 ÷ 90 × 100 ≈ <strong>36%</strong>.</p>"
+       "<p>On the as-fed faceplate the wet food looked “lower protein” (10% vs 32%), but after removing water the wet example is actually higher on a dry-matter basis in this demo. Always use the numbers on <em>your</em> package; this arithmetic is a comparison aid, not a claim that one commercial diet is better.</p>"
+       "<p>After you finish comparing nutrients, enter the calorie statement into the <a href=\"/cat-calorie-calculator/\">calorie calculator</a> to sketch a starting portion, then confirm with body-condition checks and your vet.</p>"),
       ("Ingredient list realities",
        "<p>Ingredients are listed by weight before cooking. Water-heavy items (fresh meat) can appear before meals even when meals contribute more dry matter after processing. \"Meal\" is not automatically bad; it is a concentrated ingredient. Buzzwords such as \"holistic,\" \"premium,\" or \"ancestral\" are not regulated nutrient standards.</p>"
        "<p>Watch for onion or garlic powders in some toppers and broths—those belong in our <a href=\"/can-cats-eat/onions/\">onion</a> and <a href=\"/can-cats-eat/garlic/\">garlic</a> hazard pages, not in a cat's bowl.</p>"),
       ("Treats and the 10% rule of thumb",
        "<p>Veterinary nutrition guidance commonly suggests keeping treats—including human-food bites—around or under about 10% of daily calories so the complete diet can still do its job. Enter treat calories into the same daily budget you use for meals. Our food safety list explains preparation limits; it is not a license to replace cat food with table scraps.</p>"),
       ("When to ask your veterinarian",
-       "<p>Weight loss plans, chronic kidney disease, diabetes, food allergies, and recovery diets need individualized plans. Label literacy helps you ask better questions; it does not replace a exam or a prescription diet.</p>"),
+       "<p>Weight loss plans, chronic kidney disease, diabetes, food allergies, and recovery diets need individualized plans. Label literacy helps you ask better questions; it does not replace an exam or a prescription diet.</p>"),
     ],
     "faq": [
       ("Is grain-free automatically better for cats?",
@@ -71,22 +77,40 @@ GUIDES = [
     "description": "A practical first-weeks checklist for new kitten guardians: diet stage, household hazards, litter basics, and when to schedule veterinary care.",
     "updated": "2026-11-02",
     "sections": [
-      ("Before the kitten comes home",
-       "<p>Set up a quiet room with a litter box, food and water bowls spaced apart, a scratching surface, and a hiding spot. Remove true lilies and daylilies from the home (see our <a href=\"/guides/lilies-and-cats/\">lily guide</a>). Cord protectors, secured windows, and closed laundry machines prevent common accidents.</p>"
-       "<p>Confirm the previous caregiver's diet and schedule so you can transition food gradually over about a week if you change brands. Abrupt swaps are a frequent cause of diarrhea in new homes.</p>"),
-      ("Feeding life stage, not vibes",
-       "<p>Growing kittens need a diet that meets growth (or all-life-stages) nutrient profiles, not an adult light formula. Free-choice dry food works for some households; measured meals help you notice appetite changes. Use the <a href=\"/cat-calorie-calculator/\">calorie calculator</a> with the kitten factor only as a ballpark—kittens vary widely, and body condition beats any app.</p>"
-       "<p>Cow's milk is not kitten milk replacer. If a very young orphan needs bottle feeding, use a commercial kitten milk replacer and veterinary instructions—not dairy from your fridge (<a href=\"/can-cats-eat/milk/\">milk page</a>).</p>"),
-      ("Litter, socialization, and sleep",
-       "<p>Most kittens take to a clean, uncovered box with unscented clumping or non-clumping litter. Scoop daily. Play with wand toys in short sessions; avoid using your hands as toys so biting habits do not form. Kittens sleep many hours—protect that rest from chaotic households.</p>"),
-      ("Veterinary timing (general, not a schedule prescription)",
-       "<p>New kittens typically need an exam soon after arrival for parasites, vaccine planning, FeLV/FIV testing discussions, and spay/neuter timing. Your clinic sets the exact schedule for your region and the kitten's age. Ask about microchipping and a recovery plan after surgery.</p>"
-       "<p>Keep a simple written log of weight, vaccines, and deworming—paper or a future printable planner—so the next appointment goes faster.</p>"),
-      ("Foods and plants to keep away",
-       "<p>Human foods that are unsafe for adult cats are unsafe for kittens too: chocolate, alcohol, onion family foods, raw dough, xylitol products, and cooked bones. Browse <a href=\"/can-cats-eat/\">Can Cats Eat…?</a> before sharing anything from your plate. String, rubber bands, and hair ties are choking and obstruction hazards that curious kittens love.</p>"),
-      ("A calm first fortnight",
-       "<p>Limit visitors for a few days if the kitten is shy. Keep dogs separated until supervised introductions are planned. Soft carriers for the first vet ride, a towel that smells like the previous home, and predictable meal times reduce stress more than fancy gadgets.</p>"
-       "<p>Write down baseline stool quality, appetite and weight after the first week. That notebook becomes invaluable if diarrhea or lethargy appears later. CatCalc tools support the boring-but-important parts—age stage, calories, food hazards—while your clinic handles vaccines and parasites.</p>"),
+      ("How to use this checklist",
+       "<p>Print this page or copy the boxes into a notes app. Check items as you go. Timing for vaccines and tests is set by your clinic—use those rows as prompts to ask, not as a universal medical schedule. Life-stage context: <a href=\"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/feline-life-stage-definitions/\" rel=\"noopener\">AAHA/AAFP feline life stage definitions</a> and <a href=\"https://catvets.com/guidelines/practice-guidelines/life-stage-guidelines\" rel=\"noopener\">AAFP/AAHA life stage guidelines overview</a>.</p>"),
+      ("Before arrival (checkable)",
+       "<ul class=\"checklist\">"
+       "<li>☐ Quiet room ready: litter box, food and water spaced apart, scratcher, hiding spot</li>"
+       "<li>☐ True lilies and daylilies removed from the home (<a href=\"/guides/lilies-and-cats/\">lily guide</a>)</li>"
+       "<li>☐ Cords protected; windows secured; washer/dryer doors kept closed</li>"
+       "<li>☐ Carrier lined with a towel; previous diet brand written down for a gradual transition</li>"
+       "<li>☐ Appointment request sent to a feline-friendly clinic for an intake exam</li>"
+       "<li>☐ Household agreement on who feeds, scoops, and child/dog supervision rules</li>"
+       "</ul>"),
+      ("First week at home (checkable)",
+       "<ul class=\"checklist\">"
+       "<li>☐ Growth or all-life-stages complete food in use (not an adult “light” diet unless a vet directs)</li>"
+       "<li>☐ Meals measured so appetite changes are visible; <a href=\"/cat-calorie-calculator/\">calorie calculator</a> used only as a ballpark with the kitten factor</li>"
+       "<li>☐ Cow’s milk avoided; orphans on commercial kitten milk replacer only with veterinary instructions (<a href=\"/can-cats-eat/milk/\">milk page</a>)</li>"
+       "<li>☐ Litter scooped daily; note stool quality each day</li>"
+       "<li>☐ Short wand-toy play sessions; hands not used as toys</li>"
+       "<li>☐ Weight recorded every 2–3 days on the same scale</li>"
+       "<li>☐ String, rubber bands, hair ties, and toxic human foods secured (<a href=\"/can-cats-eat/\">food list</a>)</li>"
+       "<li>☐ Visitors limited if the kitten is fearful; dog introductions postponed until a plan exists</li>"
+       "</ul>"),
+      ("First veterinary visit — bring / ask (checkable)",
+       "<ul class=\"checklist\">"
+       "<li>☐ Previous medical records, vaccine history, and deworming dates</li>"
+       "<li>☐ Current food name, feeding amounts, and treat list</li>"
+       "<li>☐ Home weight log and stool notes from week one</li>"
+       "<li>☐ Ask: parasite plan, vaccine schedule for this kitten’s age/region, FeLV/FIV testing discussion</li>"
+       "<li>☐ Ask: microchip, spay/neuter timing, and recovery plan after surgery</li>"
+       "<li>☐ Ask: diet transition if changing brands; bring a fresh stool sample if requested</li>"
+       "</ul>"
+       "<p>Your clinic sets the exact schedule. This list only helps you arrive prepared.</p>"),
+      ("Tools that support the checklist",
+       "<p>Use the <a href=\"/cat-age-calculator/\">age calculator</a> to confirm the kitten life-stage label, the <a href=\"/cat-calorie-calculator/\">calorie calculator</a> for a starting portion guess, and <a href=\"/can-cats-eat/\">Can Cats Eat…?</a> before sharing any human food. CatCalc does not replace vaccines, lab work, or emergency care.</p>"),
     ],
     "faq": [
       ("How soon should a new kitten see a vet?",
@@ -105,17 +129,35 @@ GUIDES = [
     "sections": [
       ("Senior is a life stage, not a vibe",
        "<p>The 2021 AAHA/AAFP feline life stage guidelines describe cats over 10 years as seniors (with mature adult roughly 7–10). Aging cats often hide discomfort. Gradual weight loss, drinking more, or skipping meals can be early clues for kidney disease, dental pain, hyperthyroidism, diabetes, or other conditions—problems a calculator cannot diagnose.</p>"
-       "<p>CatCalc's <a href=\"/cat-age-calculator/\">age calculator</a> maps life stages for orientation only. It does not replace exams.</p>"),
-      ("Weigh on a schedule",
-       "<p>Weekly or biweekly home weights catch trends sooner than yearly visits alone. Use a baby or pet scale, or weigh yourself holding the cat and subtract. Record the number in a notebook with the date. A loss of even a small percentage of body weight can be meaningful in a cat; let your vet interpret the trend rather than waiting for a dramatic change.</p>"
-       "<p>Body-condition scoring (ribs easy to feel under a slight fat cover, visible waist from above in most cats) complements the scale. Fluffy coats hide thin frames.</p>"),
+       "<p>Source: <a href=\"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/feline-life-stage-definitions/\" rel=\"noopener\">AAHA/AAFP feline life stage definitions</a>. CatCalc's <a href=\"/cat-age-calculator/\">age calculator</a> maps life stages for orientation only.</p>"),
+      ("Copyable weight and appetite log",
+       "<p>Copy this table into a notebook or spreadsheet. Weigh at the same time of day when you can.</p>"
+       "<table><caption>Home log (example layout)</caption><thead><tr>"
+       "<th scope=\"col\">Date</th><th scope=\"col\">Weight</th><th scope=\"col\">Unit</th>"
+       "<th scope=\"col\">Appetite (normal / picky / none)</th><th scope=\"col\">Water / urine notes</th>"
+       "<th scope=\"col\">Vomiting / stool</th><th scope=\"col\">Energy / hiding</th><th scope=\"col\">Food brand &amp; amount</th>"
+       "</tr></thead><tbody>"
+       + "".join(
+         f"<tr><td>____-__-__</td><td>____</td><td>kg/lb</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>"
+         for _ in range(7)
+       )
+       + "</tbody></table>"
+       "<p class=\"small\">A loss of even a small percentage of body weight can be meaningful in a cat; let your vet interpret the trend. Body-condition scoring (ribs easy to feel under a slight fat cover, visible waist from above in most cats) complements the scale.</p>"),
       ("Calories change with muscle and disease",
        "<p>Maintenance calorie estimates from RER × life-stage factors (see our <a href=\"/cat-calorie-calculator/\">calorie tool</a>) assume a relatively typical adult. Seniors may need fewer calories if inactive, or more if they have conditions that raise metabolism. Weight-loss modes in any calculator are starting points for veterinary-supervised plans—not DIY crash diets.</p>"
        "<p>Soft foods can help some cats with dental disease, but new diets for kidney or thyroid disease should be chosen with your vet. Do not crowd the bowl with tuna or milk as \"appetite stimulants\" without advice—those have their own limits on our food pages.</p>"),
       ("Appetite red flags",
-       "<p>Seek veterinary care promptly if a senior cat stops eating for more than a day, drools, drops food, drinks and urinates much more than usual, hides constantly, or vomits repeatedly. Cats that do not eat are at risk of hepatic lipidosis; this is not a \"wait and see\" situation.</p>"),
-      ("Keep records for the clinic",
-       "<p>Bring a short list: current food (brand and kcal if known), treat habits, weight log, medications, and when symptoms started. That preparation often matters more than any online article—including this one.</p>"),
+       "<p>Seek veterinary care promptly if a senior cat stops eating for more than a day, drools, drops food, drinks and urinates much more than usual, hides constantly, or vomits repeatedly. Cats that do not eat are at risk of hepatic lipidosis; this is not a \"wait and see\" situation. Background reading: <a href=\"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hepatic-lipidosis\" rel=\"noopener\">Cornell Feline Health Center — hepatic lipidosis</a>.</p>"),
+      ("What to bring to the vet",
+       "<ul>"
+       "<li>This weight/appetite log (even two weeks of numbers helps)</li>"
+       "<li>Current foods and treats with calorie statements if available</li>"
+       "<li>All medications and supplements with doses</li>"
+       "<li>Timeline: when symptoms started, whether weight fell, thirst rose, or litter habits changed</li>"
+       "<li>Prior lab results or clinic portal printouts if you have them</li>"
+       "<li>Questions written down (dental pain? kidney panel? thyroid? diet change?)</li>"
+       "</ul>"
+       "<p>That preparation often matters more than any online article—including this one.</p>"),
       ("Environment tweaks that help older cats",
        "<p>Low-entry litter boxes, night lights in hallways, warmer resting spots and food bowls raised slightly can help arthritic or hypertensive seniors. None of these replace pain assessment or lab work, but they make daily life easier while you work with your vet.</p>"
        "<p>If you use the CatCalc age tool and see “senior,” treat it as a calendar reminder to schedule wellness care—not as a reason to start random supplements from social media.</p>"),
@@ -137,28 +179,28 @@ GUIDES = [
     "sections": [
       ("Purpose of the ratings",
        "<p>The <a href=\"/can-cats-eat/\">Can Cats Eat…?</a> pages answer a practical question: if a cat steals a bite—or an owner is tempted to share—what is the honest risk framing? We are not a poison-control center and we do not provide doses, LD50 figures, or treatment protocols.</p>"
-       "<p>Each food page uses a visible label (for example \"Do not feed\" or \"Small treat · cooked\"), a short conclusion, a longer \"why,\" and a handling section. Related links point to similar foods so you can compare raw vs cooked eggs, or onions vs garlic, without relying on one generic paragraph.</p>"),
+       "<p>Each food page uses a visible label (for example \"Do not feed\" or \"Small treat · cooked\"), a short conclusion, a longer \"why,\" food-specific detail when available, and a handling section. Related links point to similar foods so you can compare raw vs cooked eggs, or onions vs garlic, without relying on one generic paragraph.</p>"),
       ("Three buckets, with nuance",
        "<p><strong>Avoid / do not feed</strong> covers foods with well-established hazards for cats (such as chocolate, alcohol, Allium family plants, cooked bones) or foods where evidence is limited in cats but sharing still has no benefit (such as grapes and raisins, where dog kidney injury is established and cat data are sparse). Limited evidence is stated plainly—we do not copy dog toxicity claims onto cats without saying so.</p>"
        "<p><strong>Caution</strong> covers foods that may be tolerated in tiny amounts by some cats but bring lactose, salt, fat, incompleteness, or preparation risks (milk, tuna as a staple, raw fish, ham).</p>"
        "<p><strong>Small treat</strong> covers plainly prepared items that are generally non-toxic in small portions (cooked unseasoned chicken, plain pumpkin) but still must stay inside the treat calorie budget and never replace a complete cat diet.</p>"),
       ("Sources we lean on",
-       "<p>We prioritize ASPCA poison-control food hazard pages, AAHA/AAFP life-stage and nutrition resources for calculator context, and clearly marked primary literature when a claim is unusual (for example xylitol differences in cats). When cat-specific data are thin, we say so. Pages are revised together when our wording standards change; see each page's revision note.</p>"),
+       "<p>We prioritize <a href=\"https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets\" rel=\"noopener\">ASPCA people-food hazard guidance</a>, <a href=\"https://www.petpoisonhelpline.com/\" rel=\"noopener\">Pet Poison Helpline</a> toxin pages, <a href=\"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/feline-life-stage-definitions/\" rel=\"noopener\">AAHA/AAFP life-stage definitions</a> for calculator context, <a href=\"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat\" rel=\"noopener\">Cornell feeding guidance</a>, <a href=\"https://wsava.org/global-guidelines/global-nutrition-guidelines/\" rel=\"noopener\">WSAVA nutrition resources</a>, and clearly marked primary literature when a claim is unusual (for example <a href=\"https://pubmed.ncbi.nlm.nih.gov/29430681/\" rel=\"noopener\">xylitol in cats</a>). When cat-specific data are thin, we say so. Each page shows a real revision date from our content calendar.</p>"),
       ("What we refuse to claim",
        "<p>We do not promise that a food \"cures\" digestion, urinary issues, or behavior. We do not invent case studies, fake vet reviewers, or made-up percentages of cats affected. We do not treat social-media anecdotes as evidence.</p>"),
       ("How to use the tools together",
-       "<p>Check safety on a food page, then portion with the <a href=\"/cat-calorie-calculator/\">calorie calculator</a>. Life stage from the <a href=\"/cat-age-calculator/\">age calculator</a> is a reminder to match diet type (kitten vs adult vs senior monitoring)—not a medical age certificate.</p>"),
+       "<p>Check safety on a food page, then portion with the <a href=\"/cat-calorie-calculator/\">calorie calculator</a>. Life stage from the <a href=\"/cat-age-calculator/\">age calculator</a> is a reminder to match diet type (kitten vs adult vs senior monitoring)—not a medical age certificate. Practical follow-ons: <a href=\"/guides/how-to-read-cat-food-labels/\">label guide</a>, <a href=\"/guides/kitten-first-weeks-checklist/\">kitten checklist</a>, <a href=\"/guides/senior-cat-weight-and-appetite/\">senior log</a>.</p>"),
       ("Corrections welcome",
-       "<p>If a page is unclear or a source link moves, email us from the Contact page with the URL and suggested fix. We would rather revise wording than defend a thin or misleading sentence. AdSense quality and cat safety both depend on that habit.</p>"
-       "<p>Pages in the food section share a template for navigation consistency, but each item keeps its own conclusion, why-text, handling steps and extra notes so the advice is not a copy-paste verdict with only the food name swapped.</p>"),
+       "<p>If a page is unclear or a source link moves, email us from the Contact page with the URL and suggested fix. We would rather revise wording than defend a thin or misleading sentence. Cat safety depends on that habit.</p>"
+       "<p>Pages in the food section share navigation patterns for consistency, but each item keeps its own conclusion, why-text, handling steps and extra notes so the advice is not a copy-paste verdict with only the food name swapped.</p>"),
     ],
     "faq": [
       ("Why do some \"no\" foods say evidence is limited?",
-       "Because honesty matters for AdSense-quality content and for your cat. If dog data dominate the literature, we warn you not to feed the item and we avoid claiming a proven cat-specific mechanism we cannot support."),
+       "Because honesty matters for your cat. If dog data dominate the literature, we warn you not to feed the item and we avoid claiming a proven cat-specific mechanism we cannot support."),
       ("Can a \"small treat\" food become harmful?",
        "Yes—large amounts, seasonings, bones, xylitol-containing brands, or using treats as meals can turn a generally safe food into a problem. Read the preparation section every time."),
       ("Who writes CatCalc?",
-       "An independent creator based in China (Pumpkin Cat video series). We are not veterinarians. See the About page for contact details."),
+       "The CatCalc editorial team (see the About page). We are not veterinarians. An independent creator based in China publishes the Pumpkin Cat videos and maintains this site."),
     ],
   },
 ]

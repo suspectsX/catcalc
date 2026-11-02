@@ -3,7 +3,7 @@
 import json, os, shutil, html, datetime, sys
 from pathlib import Path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
-from foods import FOODS, FOOD_GUIDANCE, FOOD_SOURCES, FOOD_EXTRA, related_foods
+from foods import FOODS, FOOD_GUIDANCE, FOOD_SOURCES, FOOD_EXTRA, FOOD_DETAIL, related_foods
 from names import NAMES
 from guides import GUIDES
 
@@ -67,7 +67,7 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
     if C.get("tiktok_url"): social += f' · <a href="{e(C["tiktok_url"])}" rel="noopener" target="_blank">TikTok</a>'
     if C.get("douyin_url"): social += f' · <a href="{e(C["douyin_url"])}" rel="noopener" target="_blank">Douyin</a>'
     canon = URL + path
-    nav_items = [("/cat-age-calculator/", "Age"), ("/cat-calorie-calculator/", "Calories"), ("/can-cats-eat/", "Can cats eat…?"), ("/cat-name-generator/", "Names"), ("/guides/", "Guides"), ("/cat-care-planner/", "Shop (coming soon)")]
+    nav_items = [("/cat-age-calculator/", "Age"), ("/cat-calorie-calculator/", "Calories"), ("/can-cats-eat/", "Can cats eat…?"), ("/cat-name-generator/", "Names"), ("/guides/", "Guides")]
     navigation = ''.join(
         f'<a href="{rel(p)}"' + (
             ' aria-current="page"' if path == p or (p == '/can-cats-eat/' and path.startswith(p)) or (p == '/guides/' and path.startswith(p)) else ''
@@ -76,7 +76,7 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
         canonical = '<meta name="robots" content="noindex">'
     else:
         canonical = f'<link rel="canonical" href="{e(canon)}">'
-    share_image = URL + '/assets/img/01-cover-coming-soon.jpg'
+    share_image = URL + '/assets/img/illustrations/home-cat-tools-1200.webp'
     doc = f"""<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="p:domain_verify" content="42383cf36e5ced7bb33c391f2d966076"/>
@@ -86,8 +86,8 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="website"><meta property="og:url" content="{e(canon)}">
 <meta property="og:image" content="{share_image}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="1200">
-<meta property="og:image:alt" content="Cat Care Planner preview, coming soon">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="Cat Care Planner preview, coming soon">
+<meta property="og:image:alt" content="CatCalc free cat tools: age, calories and food safety">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="CatCalc free cat tools: age, calories and food safety">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 <link rel="stylesheet" href="{rel('/assets/style.css')}">
 <script defer src="{rel('/assets/tools.js')}"></script>
@@ -96,7 +96,7 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
 <nav aria-label="Main">{navigation}</nav></div></header>
 <main class="wrap" id="content">{body}{'' if not_found else product_box()}</main>
 <footer><div class="wrap"><p>{e(NAME)} provides general information only and is not a substitute for veterinary advice. If you think your cat ate something toxic, call your vet, the ASPCA Animal Poison Control Center (888-426-4435, fee may apply) or Pet Poison Helpline (855-764-7661).</p>
-<p><a href="{rel('/guides/')}">Guides</a> · <a href="{rel('/cat-care-planner/')}">Shop</a> · <a href="{rel('/about/')}">About</a> · <a href="{rel('/contact/')}">Contact</a> · <a href="{rel('/terms/')}">Terms</a> · <a href="{rel('/privacy/')}">Privacy</a> · <a href="{rel('/refund-policy/')}">Refund Policy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
+<p><a href="{rel('/guides/')}">Guides</a> · <a href="{rel('/about/')}">About</a> · <a href="{rel('/cat-care-planner/')}">Planner preview</a> · <a href="{rel('/contact/')}">Contact</a> · <a href="{rel('/terms/')}">Terms</a> · <a href="{rel('/privacy/')}">Privacy</a> · <a href="{rel('/refund-policy/')}">Refund Policy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
 </body></html>"""
     target = Path(OUT, "404.html") if not_found else Path(OUT, path.strip("/"), "index.html")
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -117,8 +117,7 @@ def home():
              ("/cat-calorie-calculator/", "🍽️ Cat Calorie & Food Calculator", "How many calories and grams of food your cat needs per day."),
              ("/can-cats-eat/", "🥕 Can Cats Eat…?", f"Quick yes / no / caution answers for {len(FOODS)} common human foods."),
              ("/cat-name-generator/", "✨ Cat Name Generator", "Hundreds of name ideas: orange, black, Halloween, food and cute names."),
-             ("/guides/", "📚 Cat Care Guides", "Original explainers on lilies, labels, kittens, senior weight and how we rate foods."),
-             ("/cat-care-planner/", "🎃 Printable Cat Care Planner", "Coming soon. Peek at a planned 22-page printable care tracker — not for sale yet.")]
+             ("/guides/", "📚 Cat Care Guides", "Original explainers on lilies, labels, kittens, senior weight and how we rate foods.")]
     c = "".join(f'<a class="card" href="{rel(p)}"><h2>{t}</h2><p>{d}</p></a>' for p, t, d in cards)
     toxic = "".join(f'<li><a href="{rel("/can-cats-eat/"+s+"/")}">{e(n)}</a> · {e(FOOD_GUIDANCE[s][0])}: {e(FOOD_GUIDANCE[s][1])}</li>' for s, n, v, *_ in FOODS if v == "no" or s in ("raw-fish", "raw-eggs"))
     body = f"""<section class="hero"><h1>Free, simple tools for cat owners</h1>
@@ -127,7 +126,8 @@ def home():
 <section class="box"><h2>Foods to avoid or prepare carefully</h2>{illustration('home-food-awareness', 'An orange cat kept away from chocolate, onions and grapes in a closed cupboard.')}<ul>{toxic}</ul>
 <p>Also dangerous: <strong>lilies</strong> (true lilies and daylilies). Even pollen or vase water can cause kidney failure in cats, so keep them out of homes with cats. Read our <a href="{rel('/guides/lilies-and-cats/')}">lily safety guide</a>.</p></section>
 <section class="box"><h2>How CatCalc is built</h2>
-<p>We publish free browser tools plus original articles that explain the method behind the numbers—RER calorie math, informal age charts, and honest limits when cat-specific toxin data are thin. Start with <a href="{rel('/about/')}">About</a> or <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how we rate human foods</a>.</p></section>"""
+<p>We publish free browser tools plus original articles that explain the method behind the numbers—RER calorie math, informal age charts, and honest limits when cat-specific toxin data are thin. Content is written by the <a href="{rel('/about/')}">CatCalc editorial team</a>. Start with <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how we rate human foods</a>.</p>
+<p class="small">A printable Cat Care Planner is still a draft preview only (not for sale). Free tools above are the main product.</p></section>"""
     layout("/", f"{NAME}: Free Cat Age, Calorie & Food Safety Tools", "Free cat tools: cat age in human years, daily calorie and food calculator, can cats eat this food, cat name generator, and original care guides.", body,
            {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": URL + "/"})
 
@@ -153,12 +153,14 @@ def age():
 <p>People ask for a single “cat year to human year” number because it makes life stages easier to talk about. Cats do not age on a human calendar, but a transparent chart still helps owners notice when kitten care should give way to adult maintenance, and when senior monitoring becomes more important.</p>
 <p>CatCalc uses a widely shared <strong>informal approximation</strong>: the first year counts as about <strong>15</strong> human years, the second year brings the total to about <strong>24</strong>, and each year after that adds about <strong>4</strong> human years. Ages under one year are interpolated from typical kitten development so a 3-month-old kitten does not show the same result as a 1-year-old.</p>
 <p>This is <strong>not</strong> a clinical geriatric assessment, not a dental aging method, and not an AAHA/AAFP–endorsed conversion formula. The life-stage labels we show beside the result come from a <em>separate</em> source—the 2021 AAHA/AAFP feline life stage definitions—so we do not pretend the arithmetic and the guidelines are one document.</p>
-<h2>Worked examples</h2>
+<h2>Worked examples (same math as the calculator)</h2>
+<p>These match the live JavaScript on this page. Try the same inputs to verify.</p>
 <ul>
-<li><strong>8-month-old kitten:</strong> under one year, so the tool scales toward the 15-human-year mark at 12 months. Expect a result well below 15, with a kitten life stage.</li>
-<li><strong>2-year-old adult:</strong> about 24 human years on this chart, labeled young adult.</li>
-<li><strong>12-year-old:</strong> 24 + 4×10 = 64 human years on this chart, labeled senior. Use that label as a prompt for twice-yearly exams if your vet agrees—not as a diagnosis.</li>
+<li><strong>0 years, 8 months:</strong> age under 1 year uses the kitten interpolation table. At 8 months the script returns about <strong>12 human years</strong>, life stage <strong>Kitten</strong>.</li>
+<li><strong>2 years, 0 months:</strong> after year two the chart is 24 human years → about <strong>24 human years</strong>, life stage <strong>Young adult</strong>.</li>
+<li><strong>12 years, 0 months:</strong> 24 + 4×(12−2) = <strong>64 human years</strong>, life stage <strong>Senior</strong>. Use that label as a prompt for more frequent exams if your vet agrees—not as a diagnosis.</li>
 </ul>
+<p class="small">Empty fields, non-numbers, years outside 0–35, or months outside 0–11 show an inline error and do not invent a result. Months must be whole numbers.</p>
 <h2>Cat age chart</h2><table><caption>Approximate human-year equivalents</caption><thead><tr><th scope="col">Cat age (years)</th><th scope="col">Human age (years)</th></tr></thead><tbody>{rows}</tbody></table>
 {illustration('cat-life-stages', 'Four illustrations showing a cat at different life stages.')}<p class="small">Life stages: kitten, young adult, mature adult and senior.</p>
 <h2>Life stages in plain language</h2>
@@ -173,7 +175,7 @@ def age():
 
 def calories():
     qas = [
-        ("How many calories does a cat need per day?", "A typical 4.5 kg (10 lb) neutered indoor adult cat needs roughly 215-260 kcal per day (inactive to neutered-adult factor), but needs vary. The calculator uses RER = 70 x (weight in kg)^0.75 multiplied by a life-stage factor."),
+        ("How many calories does a cat need per day?", "A typical 4.5 kg neutered adult lands near about 260 kcal/day with the 1.2 factor on this tool (RER ≈ 216). Needs vary. The calculator uses RER = 70 × (weight in kg)^0.75 multiplied by a life-stage factor."),
         ("How much wet or dry food should I feed my cat?", "Divide your cat's daily calorie needs by the calories in the food (printed on the bag or can as kcal/kg, kcal/cup or kcal/can)."),
         ("How many treats can a cat have?", "Keep treats under about 10% of the total daily calorie budget. Subtract treat calories from the food allowance rather than adding them on top."),
         ("Should I use ideal weight or current weight for weight loss?", "Veterinary weight-loss plans usually target feeding for an agreed ideal or stepwise target weight. Ask your vet before using the weight-loss factor on a very overweight or ill cat."),
@@ -202,9 +204,14 @@ def calories():
 <p>RER estimates calories needed at rest. Daily needs are then approximated by multiplying RER by a life-stage or activity factor. CatCalc exposes common teaching factors such as about <strong>1.2</strong> for many neutered adults, <strong>1.4</strong> for intact adults, <strong>1.0</strong> for inactive adults, <strong>0.8</strong> for supervised weight loss, and a higher factor for kittens under one year. These are <strong>starting points</strong> used in veterinary nutrition education, not a prescription for your individual cat.</p>
 <p class="small">Context: <a href="https://www.aaha.org/resources/2021-aaha-nutrition-and-weight-management-guidelines/">AAHA nutrition and weight management guidelines</a>. Treats count inside the total budget. Ill, pregnant, nursing or underweight cats need hands-on veterinary plans.</p>
 {illustration('cat-food-measurements', 'A kitchen scale, measuring cup and wet food can used to measure cat food.')}
-<h2>Worked example</h2>
-<p>Take a <strong>4.5 kg</strong> neutered indoor adult. RER ≈ 70 × 4.5<sup>0.75</sup> ≈ <strong>207 kcal</strong>. With a 1.2 factor, maintenance ≈ <strong>248 kcal/day</strong>. If the food label lists 80 kcal per pouch, a rough starting point is 248 ÷ 80 ≈ <strong>3.1 pouches</strong> before treats. If you feed 20 kcal of treats, subtract those first so complete food still fits the budget.</p>
-<p>Swap in your cat’s real weight and the kcal statement from <em>your</em> bag or can. Wet and dry foods differ wildly in energy density; never copy a neighbor’s cup count.</p>
+<h2>Worked examples (same math as the calculator)</h2>
+<p>The live tool uses <code>RER = 70 × kg<sup>0.75</sup></code>, then multiplies by the selected factor, and rounds displayed kcal with ordinary rounding. Food amounts use the optional kcal field (kcal/kg, kcal/cup, or kcal/can).</p>
+<ol>
+<li><strong>4.5 kg · neutered/spayed (factor 1.2) · 80 kcal/can:</strong> RER = 70 × 4.5<sup>0.75</sup> ≈ <strong>216.28 kcal</strong> (tool shows RER <strong>216</strong>). Daily estimate ≈ 216.28 × 1.2 ≈ <strong>259.53</strong> → tool shows <strong>260 kcal</strong>. Food-only allowance ≈ 259.53 ÷ 80 ≈ <strong>3.24 cans</strong> before treats. Treat budget inside that total ≈ 10% ≈ 26 kcal.</li>
+<li><strong>10 lb · inactive adult (factor 1.0), no food field:</strong> 10 lb × 0.45359237 ≈ <strong>4.54 kg</strong>. RER ≈ 217.57 → tool shows RER <strong>218</strong>. Daily estimate ≈ 218 kcal (factor 1.0). Leaving food calories blank skips the portion line.</li>
+<li><strong>3.0 kg · kitten under 1 year (factor 2.5) · 400 kcal/cup:</strong> RER ≈ 159.57 → tool shows <strong>160</strong>. Daily ≈ 159.57 × 2.5 ≈ 398.92 → tool shows <strong>399 kcal</strong>. Cups ≈ 398.92 ÷ 400 ≈ <strong>1.00 cup</strong> before treats.</li>
+</ol>
+<p>Swap in your cat’s real weight and the kcal statement from <em>your</em> bag or can. Wet and dry foods differ wildly in energy density; never copy a neighbor’s cup count. Weights outside 0.3–15 kg (about 0.66–33.07 lb), empty required fields, or non-numbers show an inline error instead of a guess.</p>
 <h2>How to use the optional food field</h2>
 <p>Enter kcal/kg if you weigh food on a kitchen scale, or kcal/cup / kcal/can when the manufacturer prints those figures. Our <a href="{rel('/guides/how-to-read-cat-food-labels/')}">label-reading guide</a> shows where those numbers usually appear. If the field is blank, you still get a calorie target to take to the clinic or compare with the feeding directions.</p>
 <h2>Body condition beats any app</h2>
@@ -245,28 +252,37 @@ def foods():
         related = related_foods(s)
         rl = "".join(f'<li><a href="{rel("/can-cats-eat/"+f[0]+"/")}">Can cats eat {e(f[1].lower())}?</a></li>' for f in related)
         sources = FOOD_SOURCES.get(s, [])
-        source_links = ''.join(f'<li><a href="{e(url)}">{e(label)}</a></li>' for label, url in sources)
-        urgent = '<p class="box">If eaten, contact your veterinarian for advice. In the US: <a href="tel:+18884264435">ASPCA Poison Control: 888-426-4435</a> (fee may apply). Elsewhere, contact a local veterinary emergency service.</p>' if v == 'no' else ''
+        source_links = ''.join(f'<li><a href="{e(url)}" rel="noopener">{e(label)}</a></li>' for label, url in sources)
+        urgent = (
+            '<div class="box"><h2>If your cat already ate this</h2>'
+            '<ol><li>Contact your veterinarian or an emergency clinic now—do not wait for symptoms.</li>'
+            '<li>In the US you can also call <a href="tel:+18884264435">ASPCA Animal Poison Control: 888-426-4435</a> '
+            'or <a href="tel:+18557647661">Pet Poison Helpline: 855-764-7661</a> (fees may apply).</li>'
+            '<li>Have ready: approximate amount and time, product packaging or ingredients, your cat’s weight, and any symptoms.</li>'
+            '<li>Do not induce vomiting or give home remedies unless a veterinarian specifically instructs you to.</li></ol></div>'
+        ) if v == 'no' else ''
         g = gear([("cat treats", "Cat-safe treats")]) if v != "no" else ""
         extra = FOOD_EXTRA.get(s, "")
-        rating_note = {
-            "no": f"<p>Rating focus: prevent exposure and get professional advice after ingestion. We do not provide home treatment protocols for {e(n.lower())}.</p>",
-            "caution": f"<p>Rating focus: {e(n)} may be tolerated only with strict limits—or not at all for some cats. When preparation or evidence is the issue, follow the section below rather than generic “cats can eat anything cooked” advice.</p>",
-            "yes": f"<p>Rating focus: {e(n)} can be a <em>small</em> plain treat for many healthy cats. It is still optional. Complete cat food remains the staple diet.</p>",
-        }[v]
+        detail = "".join(f"<h2>{e(h)}</h2>{html_body}" for h, html_body in FOOD_DETAIL.get(s, []))
+        treat_block = "" if v == "no" else (
+            '<h2>Treats and complete diets</h2>'
+            f'<p>If this food is appropriate at all, keep it inside the daily calorie budget. Use the '
+            f'<a href="{rel("/cat-calorie-calculator/")}">calorie calculator</a> and keep treats near or under about 10% of total kcal. '
+            'Human food is not a balanced cat diet.</p>'
+        )
+        aspca_general = '' if sources else '<li><a href="https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets" rel="noopener">ASPCA: people foods to avoid</a> (multi-species list; read the cat-specific notes above).</li>'
         body = f"""<p class="crumbs"><a href="{rel('/can-cats-eat/')}">Can cats eat…?</a> › {e(n)}</p>
 <h1>{e(q[0].upper()+q[1:])}</h1>
+<p class="small">By <a href="{rel('/about/')}">CatCalc editorial team</a> · Updated {content_date('/can-cats-eat/'+s+'/')} · Not veterinary advice</p>
 <div class="verdict {cls}"><strong>{e(lab)}</strong></div>
 <p class="lead">{e(short)}</p>{urgent}
 <h2>Why</h2><p>{e(why)}</p>
-<p>{e(extra)}</p>
+{f'<p>{e(extra)}</p>' if extra else ''}
+{detail}
 <h2>{e(heading)}</h2><p>{e(todo)}</p>{ad_slot()}
-<h2>How we rate this food</h2>{rating_note}
-<p>Labels follow the method in <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">How CatCalc rates human foods</a>. Dog-toxicity claims are not copied onto cats without an evidence note.</p>
-<h2>Treats, calories and complete diets</h2>
-<p>Even generally safer foods must fit inside your cat’s daily calorie budget. Use the <a href="{rel('/cat-calorie-calculator/')}">calorie calculator</a> and keep treats near or under about 10% of total kcal. Human food is not a balanced cat diet.</p>
-<h2>Sources and limits</h2><ul><li><a href="https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets">ASPCA general food hazard guidance</a> (covers multiple species; cat-specific limits are noted above).</li>{source_links}</ul>
-<p class="small">General information, not veterinary review or individual advice. Ask your vet about health conditions. Content revised: {content_date('/can-cats-eat/'+s+'/')}.</p>
+{treat_block}
+<h2>Sources and limits</h2><ul>{aspca_general}{source_links}</ul>
+<p class="small">General information only. We are not veterinarians and do not invent safe doses or treatments. Method: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how CatCalc rates human foods</a>.</p>
 {g}<h2>Related</h2><ul>{rl}</ul>"""
         layout(f"/can-cats-eat/{s}/", f"Can Cats Eat {n}? {lab}", short, body,
                faq_schema([(q, short + " " + why + " " + todo)]))
@@ -312,21 +328,22 @@ def contact_p():
 def about():
     layout("/about/", f"About {NAME}", f"About {NAME}: who runs the free cat tools, how content is researched, and how to contact us.",
            f"""<h1>About {e(NAME)}</h1>
-<p>{e(NAME)} is a small English-language website run by {SELLER} who loves cats and publishes short cat videos (the “Pumpkin Cat” series). The site exists to answer everyday questions quickly: How old is my cat in human years? How much should I feed? Can cats eat this leftover? What name fits an orange kitten?</p>
+<p><strong>CatCalc editorial team</strong> publishes this small English-language site. The project is run by {SELLER} (Pumpkin Cat video series). We are <strong>not veterinarians</strong> and we do not claim clinic credentials.</p>
+<p>The site exists to answer everyday questions quickly: How old is my cat in human years? How much should I feed? Can cats eat this leftover? What name fits an orange kitten?</p>
 <h2>What we publish</h2>
 <ul>
 <li><strong>Browser tools</strong> that run on your device—no account and no upload of the numbers you type.</li>
 <li><strong>Food-safety explainers</strong> for {len(FOODS)} human foods, with honest notes when cat-specific evidence is limited.</li>
 <li><strong>Original guides</strong> on topics such as <a href="{rel('/guides/lilies-and-cats/')}">lilies</a>, <a href="{rel('/guides/how-to-read-cat-food-labels/')}">reading food labels</a>, <a href="{rel('/guides/kitten-first-weeks-checklist/')}">new kittens</a>, and <a href="{rel('/guides/senior-cat-weight-and-appetite/')}">senior weight changes</a>.</li>
-<li><strong>A printable Cat Care Planner</strong> preview ({PLANNER_STATUS})—not for sale yet, no shipping of physical goods.</li>
 </ul>
-<h2>How we handle accuracy</h2>
-<p>Calculator math and life-stage labels cite publicly available veterinary-organization resources (for example AAHA/AAFP life stage and nutrition materials). Food pages lean on ASPCA poison-control style guidance and clearly marked literature when a claim is unusual. We do <strong>not</strong> invent case studies, fake veterinary reviewers, income promises, or made-up “% of cats” statistics.</p>
-<p>When evidence differs between dogs and cats, we say so. Read <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how ratings work</a> for the full method.</p>
+<p class="small">A printable Cat Care Planner remains a draft preview only ({PLANNER_STATUS}) and is not listed among the main free tools.</p>
+<h2>How topics are researched and corrected</h2>
+<p>We start from publicly available veterinary-organization and poison-control materials (for example AAHA/AAFP life-stage guidance, ASPCA and Pet Poison Helpline hazard pages, Cornell Feline Health Center explainers, WSAVA nutrition resources, and peer-reviewed papers when a claim is unusual). Calculator formulas are checked against the live script on the page. When dog data dominate the literature, we say so instead of inventing a cat-specific toxic dose.</p>
+<p>We do <strong>not</strong> invent case studies, fake veterinary reviewers, income promises, or made-up “% of cats” statistics. If a source link moves or a sentence is wrong, email a correction—we revise the page and keep a real last-updated date (not a rebuild stamp). Method details: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how ratings work</a>.</p>
 <h2>Who we are not</h2>
-<p>We are not veterinarians, not a poison-control center, and not an emergency service. Nothing on this site replaces advice from your own vet. If your cat may have eaten something toxic, contact a clinic or hotline immediately—do not wait for an email reply from us.</p>
-<h2>Ads and funding</h2>
-<p>The site may show Google AdSense ads so the tools can stay free. See the <a href="{rel('/privacy/')}">Privacy Policy</a> for cookies and opt-out links. Affiliate tags appear only when configured; none are required to use the calculators.</p>
+<p>We are not a poison-control center and not an emergency service. Nothing on this site replaces advice from your own vet. If your cat may have eaten something toxic, contact a clinic or hotline immediately—do not wait for an email reply from us.</p>
+<h2>Funding</h2>
+<p>The site may show ads so the tools can stay free. See the <a href="{rel('/privacy/')}">Privacy Policy</a> for cookies and opt-out links. Affiliate tags appear only when configured; none are required to use the calculators.</p>
 <h2>Contact</h2>
 <p>Email {contact_p()} for site questions, corrections, or planner inquiries. We usually reply within 2 business days (UTC+8). For medical emergencies, call your vet or a pet poison hotline instead.</p>""")
 
@@ -400,7 +417,7 @@ def planner():
     lis = "".join(f"<li>{e(x)}</li>" for x in PLANNER)
     schema = {"@context": "https://schema.org", "@type": "WebPage", "url": URL + "/cat-care-planner/", "name": "Cat Care Planner – Printable PDF (Pumpkin Cat Edition)",
               "image": [URL + "/assets/img/01-cover-coming-soon.jpg"], "description": PLANNER_STATUS + ". Preview of a planned 22-page printable care tracker. Not for sale yet."}
-    body = f"""<p class="crumbs"><a href="{rel('/')}">Home</a> › Shop (coming soon)</p>
+    body = f"""<p class="crumbs"><a href="{rel('/')}">Home</a> › Planner preview (not for sale)</p>
 <div class="prod"><div class="gallery">{imgs}</div><div class="buy">
 <h1>Cat Care Planner – Printable Cat Health, Vet &amp; Feeding Tracker</h1>
 <p class="lead">Keep vet visits, vaccines, weight, meds and expenses for your cat in one cute, organized place.</p>
@@ -415,9 +432,9 @@ def planner():
 <p>Phone notes scatter. A single undated packet lets pet sitters, partners and clinics see the same vaccine dates, weight trend and medication list. Until the PDF goes on sale, you can still use free tools on this site—especially the <a href="{rel('/cat-calorie-calculator/')}">calorie calculator</a> and <a href="{rel('/guides/senior-cat-weight-and-appetite/')}">senior weight guide</a>—and keep a simple notebook with the same fields.</p>
 <h2>Details</h2><ul><li>Status: {PLANNER_STATUS}</li><li>Planned format: ZIP file with 2 PDFs (US Letter and A4)</li><li>Delivery: not yet available; no orders accepted</li><li>Intended license: personal use</li><li>Future sales policy: <a href="{rel('/refund-policy/')}">Refund Policy</a></li></ul>
 <h2>Get notified</h2>
-<p>We are not collecting emails on this page. Check back here for launch updates — when the planner goes on sale, this Shop page will be the first place we change.</p>
+<p>We are not collecting emails on this page. Check back here for launch updates — when a sale opens, this preview page will be updated.</p>
 <p class="small">This planner is an organizing tool, not veterinary advice.</p>"""
-    layout("/cat-care-planner/", "Cat Care Planner Preview – Coming Soon", "Coming soon / not yet available. Preview the planned Cat Care Planner PDF for feeding, weight and care records. No purchases or pre-orders accepted.", body, schema)
+    layout("/cat-care-planner/", "Cat Care Planner Preview – Coming Soon", "Coming soon / not yet available. Preview the planned Cat Care Planner PDF for feeding, weight and care records. No purchases or pre-orders accepted.", body, schema, noindex=True)
 
 def guides():
     cards = "".join(
@@ -443,7 +460,7 @@ def guides():
         body = f"""<p class="crumbs"><a href="{rel('/guides/')}">Guides</a> › {e(g["title"])}</p>
 <h1>{e(g["title"])}</h1>
 <p class="lead">{e(g["description"])}</p>
-<p class="small">Updated {e(g["updated"])}. General information only—not veterinary advice.</p>
+<p class="small">By <a href="{rel('/about/')}">CatCalc editorial team</a> · Updated {e(g["updated"])}. General information only—not veterinary advice. We are not veterinarians.</p>
 {sections}{faq_block}
 <p class="small"><a href="{rel('/guides/')}">All guides</a> · <a href="{rel('/contact/')}">Suggest a correction</a></p>"""
         layout(f"/guides/{g['slug']}/", g["title"], g["description"], body, schema)
