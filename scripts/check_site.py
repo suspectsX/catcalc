@@ -119,11 +119,15 @@ for path, sources in inbound.items():
 
 ns = {'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 urls = ET.parse(OUT/'sitemap.xml').getroot().findall('s:url',ns)
-if len(urls) != 52 or len(pages) != 53: errors.append('expected 52 sitemap URLs and 53 HTML files')
+if len(urls) != 58 or len(pages) != 59: errors.append(f'expected 58 sitemap URLs and 59 HTML files, got {len(urls)} and {len(pages)}')
 for entry in urls:
     path = entry.find('s:loc',ns).text.removeprefix(SITE)
     date = entry.find('s:lastmod',ns)
-    expected = DATES.get(path,DATES['/can-cats-eat/*/'] if path.startswith('/can-cats-eat/') else None)
+    expected = DATES.get(path)
+    if expected is None and path.startswith('/can-cats-eat/'):
+        expected = DATES.get('/can-cats-eat/*/')
+    if expected is None and path.startswith('/guides/'):
+        expected = DATES.get('/guides/*/')
     if (date.text if date is not None else None) != expected: errors.append(f'{path}: incorrect lastmod')
 if titles and errors:
     print('\n'.join(errors))

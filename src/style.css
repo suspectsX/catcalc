@@ -23,3 +23,5 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:18px 0;color:var
 @media(max-width:760px){.prod{grid-template-columns:1fr}.buy{position:static;order:-1}}
 @media(max-width:600px){h1{font-size:27px}.top .wrap{padding-top:7px;padding-bottom:7px;gap:4px}.top nav{width:100%;gap:2px 14px;font-size:.9rem}.hero{padding:8px 0}.tool,.box{padding:14px}.intro-art{width:160px;margin:8px 0 12px auto}.home-art{width:284px}.input-unit{grid-template-columns:minmax(0,1fr) auto}.tool>select{width:100%}.cols{columns:1}.fields{gap:12px}}
 @media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover,.btn:active{transform:none}}
+
+main p,main li{max-width:70ch}.hero p{margin-left:auto;margin-right:auto}h1,h2,h3,.card p,.lead{text-wrap:pretty}
