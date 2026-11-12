@@ -282,7 +282,7 @@ def foods():
 <h2>{e(heading)}</h2><p>{e(todo)}</p>{ad_slot()}
 {treat_block}
 <h2>Sources and limits</h2><ul>{aspca_general}{source_links}</ul>
-<p class="small">General information only. We are not veterinarians and do not invent safe doses or treatments. Method: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how CatCalc rates human foods</a>.</p>
+<p class="small">This content has not been reviewed by a veterinarian. It is general information and cannot replace veterinary diagnosis or treatment. Method: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how CatCalc rates human foods</a>.</p>
 {g}<h2>Related</h2><ul>{rl}</ul>"""
         layout(f"/can-cats-eat/{s}/", f"Can Cats Eat {n}? {lab}", short, body,
                faq_schema([(q, short + " " + why + " " + todo)]))
@@ -340,6 +340,9 @@ def about():
 <h2>How topics are researched and corrected</h2>
 <p>We start from publicly available veterinary-organization and poison-control materials (for example AAHA/AAFP life-stage guidance, ASPCA and Pet Poison Helpline hazard pages, Cornell Feline Health Center explainers, WSAVA nutrition resources, and peer-reviewed papers when a claim is unusual). Calculator formulas are checked against the live script on the page. When dog data dominate the literature, we say so instead of inventing a cat-specific toxic dose.</p>
 <p>We do <strong>not</strong> invent case studies, fake veterinary reviewers, income promises, or made-up “% of cats” statistics. If a source link moves or a sentence is wrong, email a correction—we revise the page and keep a real last-updated date (not a rebuild stamp). Method details: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how ratings work</a>.</p>
+<h2>Reading a food article alongside a calculator</h2>
+<p>A food page answers whether an ingredient or preparation raises a concern; the <a href="{rel('/cat-calorie-calculator/')}">calorie calculator</a> estimates an energy starting point. A low calorie number does not establish that a food is safe. Articles distinguish plain ingredients from mixed dishes and explain when published evidence concerns dogs or other animals rather than cats. Where a page includes worked calorie examples, the assumptions are stated so you can compare the arithmetic with the tool.</p>
+<p>The articles have not been reviewed by a veterinarian. Source links identify the materials used for particular explanations; linking to an organization does not imply that it reviewed or endorses CatCalc. Bring questions about an individual cat, a medical diet or a suspected exposure to your veterinary team.</p>
 <h2>Who we are not</h2>
 <p>We are not a poison-control center and not an emergency service. Nothing on this site replaces advice from your own vet. If your cat may have eaten something toxic, contact a clinic or hotline immediately—do not wait for an email reply from us.</p>
 <h2>Funding</h2>
@@ -360,6 +363,9 @@ def contact():
 <li>Screenshots for download or payment issues (when sales exist).</li>
 <li>Clear subject lines such as “Correction: grape page” or “Planner preview question.”</li>
 </ul>
+<h2>Reporting a factual or calculator problem</h2>
+<p>For a food article, quote the sentence in question and include a link to the source you believe supports a correction. Please distinguish an ingredient from a prepared product: a plain food and a seasoned dish may need different advice. You do not need to send your cat’s medical records or other personal documents.</p>
+<p>For a calculator, send the page address, the values and units you entered, the selected life stage, and the result you expected. If an error appeared, include its exact wording and your browser name. These details let us reproduce the calculation without collecting private veterinary information. For a broken link, include both the CatCalc page and the destination that failed.</p>
 <p>More about the project: <a href="{rel('/about/')}">About CatCalc</a>.</p>""")
 
 def terms():
