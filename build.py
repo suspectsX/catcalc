@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 from foods import FOODS, FOOD_GUIDANCE, FOOD_SOURCES, FOOD_EXTRA, FOOD_DETAIL, related_foods
 from names import NAMES
 from guides import GUIDES
+from products import PRODUCTS
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 C = json.load(open(os.path.join(ROOT, "config.json")))
@@ -13,7 +14,6 @@ OUT = os.path.join(ROOT, "docs")
 URL = C["site_url"].rstrip("/")
 NAME = C["site_name"]
 DATES = json.loads(Path(ROOT, "src", "content_dates.json").read_text(encoding="utf-8"))
-PLANNER_STATUS = "Coming soon / not yet available"
 pages = []  # for sitemap
 e = html.escape
 
@@ -48,14 +48,62 @@ def gear(items):
     return f'<aside class="box gear"><h3>Helpful gear</h3><ul>{lis}</ul><p class="small">As an Amazon Associate we earn from qualifying purchases.</p></aside>'
 
 def product_box():
-    u = C.get("digital_product_url")
-    if not u: return ""
-    return f'<aside class="box product"><h3>🐾 {e(C["digital_product_title"])}</h3><p>Track feeding, weight, vet visits and vaccines on one printable page.</p><a class="btn" href="{e(u)}" target="_blank" rel="noopener">Get it</a></aside>'
+    # Shop is surfaced in the nav, footer and homepage grid, not as a single-product box.
+    return ""
+
+def buy_btn(product, label="Get it"):
+    return f'<a class="btn" href="{e(product["payment_url"])}" target="_blank" rel="noopener">{e(label)}</a>'
+
+def cover_picture(product, eager=False, sizes="(max-width: 600px) calc(100vw - 36px), 320px"):
+    base = rel("/assets/img/shop/" + product["cover"])
+    w, h = product["cover_w"], product["cover_h"]
+    return (
+        f'<picture><source type="image/webp" srcset="{base}-480.webp 480w, {base}-800.webp 800w, {base}-1200.webp 1200w" sizes="{sizes}">'
+        f'<img src="{base}.jpg" width="{w}" height="{h}" loading="{"eager" if eager else "lazy"}" decoding="async" alt="{e(product["cover_alt"])}"></picture>'
+    )
+
+def preview_picture(stem, alt, w, h, eager=False):
+    base = rel("/assets/img/" + stem)
+    return (
+        f'<a href="{base}.jpg" aria-label="View full-size preview: {e(alt)}"><picture>'
+        f'<source type="image/webp" srcset="{base}-480.webp 480w, {base}-800.webp 800w, {base}-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), 436px">'
+        f'<img src="{base}.jpg" alt="{e(alt)}" width="{w}" height="{h}" loading="{"eager" if eager else "lazy"}" decoding="async"></picture></a>'
+    )
+
+def product_schema(product):
+    return {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product["title"],
+        "description": product["short"],
+        "image": [URL + "/assets/img/shop/" + product["cover"] + ".jpg"],
+        "url": URL + product["path"],
+        "offers": {
+            "@type": "Offer",
+            "price": product["price"],
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": product["payment_url"],
+        },
+    }
+
+def shop_card(product):
+    sub = f'<p class="small">{e(product["subtitle"])}</p>' if product.get("subtitle") else ""
+    return (
+        f'<article class="card product-card">'
+        f'<a class="product-card-image" href="{rel(product["path"])}">{cover_picture(product, sizes="(max-width: 600px) calc(100vw - 36px), 280px")}</a>'
+        f'<h2><a href="{rel(product["path"])}">{e(product["title"])}</a></h2>'
+        f'{sub}'
+        f'<p class="price">{e(product["price_label"])}</p>'
+        f'<p>{e(product["short"])}</p>'
+        f'{buy_btn(product)}'
+        f'</article>'
+    )
 
 def ad_slot():
     return ""
 
-def layout(path, title, desc, body, schema=None, not_found=False, noindex=False):
+def layout(path, title, desc, body, schema=None, not_found=False, noindex=False, share_image=None, share_alt=None, share_size=None):
     head_extra = ""
     if C.get("adsense_publisher_id"):
         head_extra += f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={e(C["adsense_publisher_id"])}" crossorigin="anonymous"></script>\n'
@@ -67,16 +115,27 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
     if C.get("tiktok_url"): social += f' · <a href="{e(C["tiktok_url"])}" rel="noopener" target="_blank">TikTok</a>'
     if C.get("douyin_url"): social += f' · <a href="{e(C["douyin_url"])}" rel="noopener" target="_blank">Douyin</a>'
     canon = URL + path
-    nav_items = [("/cat-age-calculator/", "Age"), ("/cat-calorie-calculator/", "Calories"), ("/can-cats-eat/", "Can cats eat…?"), ("/cat-name-generator/", "Names"), ("/guides/", "Guides")]
+    nav_items = [("/cat-age-calculator/", "Age"), ("/cat-calorie-calculator/", "Calories"), ("/can-cats-eat/", "Can cats eat…?"), ("/cat-name-generator/", "Names"), ("/guides/", "Guides"), ("/shop/", "Shop")]
+    def nav_current(item_path):
+        if path == item_path:
+            return True
+        if item_path == "/can-cats-eat/" and path.startswith(item_path):
+            return True
+        if item_path == "/guides/" and path.startswith(item_path):
+            return True
+        if item_path == "/shop/" and (path.startswith("/shop/") or path == "/cat-care-planner/"):
+            return True
+        return False
     navigation = ''.join(
-        f'<a href="{rel(p)}"' + (
-            ' aria-current="page"' if path == p or (p == '/can-cats-eat/' and path.startswith(p)) or (p == '/guides/' and path.startswith(p)) else ''
-        ) + f'>{label}</a>' for p, label in nav_items)
+        f'<a href="{rel(p)}"' + (' aria-current="page"' if nav_current(p) else '') + f'>{label}</a>' for p, label in nav_items)
     if not_found or noindex:
         canonical = '<meta name="robots" content="noindex">'
     else:
         canonical = f'<link rel="canonical" href="{e(canon)}">'
-    share_image = URL + '/assets/img/illustrations/home-cat-tools-1200.webp'
+    default_share = URL + '/assets/img/illustrations/home-cat-tools-1200.webp'
+    share_image = share_image or default_share
+    share_alt = share_alt or "CatCalc free cat tools: age, calories and food safety"
+    share_w, share_h = share_size or (1200, 1200)
     doc = f"""<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="p:domain_verify" content="42383cf36e5ced7bb33c391f2d966076"/>
@@ -85,9 +144,9 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
 {canonical}
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="website"><meta property="og:url" content="{e(canon)}">
-<meta property="og:image" content="{share_image}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="1200">
-<meta property="og:image:alt" content="CatCalc free cat tools: age, calories and food safety">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="CatCalc free cat tools: age, calories and food safety">
+<meta property="og:image" content="{share_image}"><meta property="og:image:width" content="{share_w}"><meta property="og:image:height" content="{share_h}">
+<meta property="og:image:alt" content="{e(share_alt)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{e(share_alt)}">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 <link rel="stylesheet" href="{rel('/assets/style.css')}">
 <script defer src="{rel('/assets/tools.js')}"></script>
@@ -96,7 +155,7 @@ def layout(path, title, desc, body, schema=None, not_found=False, noindex=False)
 <nav aria-label="Main">{navigation}</nav></div></header>
 <main class="wrap" id="content">{body}{'' if not_found else product_box()}</main>
 <footer><div class="wrap"><p>{e(NAME)} provides general information only and is not a substitute for veterinary advice. If you think your cat ate something toxic, call your vet, the ASPCA Animal Poison Control Center (888-426-4435, fee may apply) or Pet Poison Helpline (855-764-7661).</p>
-<p><a href="{rel('/guides/')}">Guides</a> · <a href="{rel('/about/')}">About</a> · <a href="{rel('/cat-care-planner/')}">Planner preview</a> · <a href="{rel('/contact/')}">Contact</a> · <a href="{rel('/terms/')}">Terms</a> · <a href="{rel('/privacy/')}">Privacy</a> · <a href="{rel('/refund-policy/')}">Refund Policy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
+<p><a href="{rel('/guides/')}">Guides</a> · <a href="{rel('/about/')}">About</a> · <a href="{rel('/shop/')}">Shop</a> · <a href="{rel('/contact/')}">Contact</a> · <a href="{rel('/terms/')}">Terms</a> · <a href="{rel('/privacy/')}">Privacy</a> · <a href="{rel('/refund-policy/')}">Refund Policy</a>{social} · © {datetime.date.today().year} {e(NAME)}</p></div></footer>
 </body></html>"""
     target = Path(OUT, "404.html") if not_found else Path(OUT, path.strip("/"), "index.html")
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -127,7 +186,11 @@ def home():
 <p>Also dangerous: <strong>lilies</strong> (true lilies and daylilies). Even pollen or vase water can cause kidney failure in cats, so keep them out of homes with cats. Read our <a href="{rel('/guides/lilies-and-cats/')}">lily safety guide</a>.</p></section>
 <section class="box"><h2>How CatCalc is built</h2>
 <p>We publish free browser tools plus original articles that explain the method behind the numbers—RER calorie math, informal age charts, and honest limits when cat-specific toxin data are thin. Content is written by the <a href="{rel('/about/')}">CatCalc editorial team</a>. Start with <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how we rate human foods</a>.</p>
-<p class="small">A printable Cat Care Planner is still a draft preview only (not for sale). Free tools above are the main product.</p></section>"""
+<p class="small">Free tools above stay free. Digital downloads are in the <a href="{rel('/shop/')}">shop</a>.</p></section>
+<section class="box"><h2>Shop</h2>
+<p>Printable cat pages and AI video templates. Checkout opens on Creem in a new tab. No physical item ships.</p>
+<div class="grid shop-grid">{"".join(shop_card(p) for p in PRODUCTS)}</div>
+<p><a href="{rel('/shop/')}">View all in the shop</a></p></section>"""
     layout("/", f"{NAME}: Free Cat Age, Calorie & Food Safety Tools", "Free cat tools: cat age in human years, daily calorie and food calculator, can cats eat this food, cat name generator, and original care guides.", body,
            {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": URL + "/"})
 
@@ -336,7 +399,7 @@ def about():
 <li><strong>Food-safety explainers</strong> for {len(FOODS)} human foods, with honest notes when cat-specific evidence is limited.</li>
 <li><strong>Original guides</strong> on topics such as <a href="{rel('/guides/lilies-and-cats/')}">lilies</a>, <a href="{rel('/guides/how-to-read-cat-food-labels/')}">reading food labels</a>, <a href="{rel('/guides/kitten-first-weeks-checklist/')}">new kittens</a>, and <a href="{rel('/guides/senior-cat-weight-and-appetite/')}">senior weight changes</a>.</li>
 </ul>
-<p class="small">A printable Cat Care Planner remains a draft preview only ({PLANNER_STATUS}) and is not listed among the main free tools.</p>
+<p class="small">A <a href="{rel('/shop/')}">shop</a> sells digital downloads, including the <a href="{rel('/cat-care-planner/')}">Cat Care Planner</a>. Those paid files are separate from the free tools and guides.</p>
 <h2>How topics are researched and corrected</h2>
 <p>We start from publicly available veterinary-organization and poison-control materials (for example AAHA/AAFP life-stage guidance, ASPCA and Pet Poison Helpline hazard pages, Cornell Feline Health Center explainers, WSAVA nutrition resources, and peer-reviewed papers when a claim is unusual). Calculator formulas are checked against the live script on the page. When dog data dominate the literature, we say so instead of inventing a cat-specific toxic dose.</p>
 <p>We do <strong>not</strong> invent case studies, fake veterinary reviewers, income promises, or made-up “% of cats” statistics. If a source link moves or a sentence is wrong, email a correction—we revise the page and keep a real last-updated date (not a rebuild stamp). Method details: <a href="{rel('/guides/how-catcalc-rates-human-foods/')}">how ratings work</a>.</p>
@@ -348,12 +411,12 @@ def about():
 <h2>Funding</h2>
 <p>The site may show ads so the tools can stay free. See the <a href="{rel('/privacy/')}">Privacy Policy</a> for cookies and opt-out links. Affiliate tags appear only when configured; none are required to use the calculators.</p>
 <h2>Contact</h2>
-<p>Email {contact_p()} for site questions, corrections, or planner inquiries. We usually reply within 2 business days (UTC+8). For medical emergencies, call your vet or a pet poison hotline instead.</p>""")
+<p>Email {contact_p()} for site questions, corrections, or shop inquiries. We usually reply within 2 business days (UTC+8). For medical emergencies, call your vet or a pet poison hotline instead.</p>""")
 
 def contact():
-    layout("/contact/", f"Contact | {NAME}", f"Email {NAME} about the site, corrections, or the Cat Care Planner. Not for veterinary emergencies.",
+    layout("/contact/", f"Contact | {NAME}", f"Email {NAME} about the site, corrections, or a shop order. Not for veterinary emergencies.",
            f"""<h1>Contact</h1>
-<p>For questions about the site, a factual correction, the Cat Care Planner, a future order, or a refund, email {contact_p()}.</p>
+<p>For questions about the site, a factual correction, a shop order, or a refund, email {contact_p()}.</p>
 <p>Please include your order number if your question is about a purchase. We usually reply within 2 business days. The site is run by one person in China (UTC+8), so replies may arrive outside US business hours.</p>
 <h2>Please do not email for emergencies</h2>
 <p>If your cat is in distress or may have been poisoned, contact your veterinarian or a pet poison hotline now. In the US: ASPCA Animal Poison Control Center 888-426-4435 (fee may apply) or Pet Poison Helpline 855-764-7661. Email replies are too slow for emergencies.</p>
@@ -361,7 +424,7 @@ def contact():
 <ul>
 <li>The page URL involved (for corrections).</li>
 <li>Screenshots for download or payment issues (when sales exist).</li>
-<li>Clear subject lines such as “Correction: grape page” or “Planner preview question.”</li>
+<li>Clear subject lines such as “Correction: grape page” or “Shop order question.”</li>
 </ul>
 <h2>Reporting a factual or calculator problem</h2>
 <p>For a food article, quote the sentence in question and include a link to the source you believe supports a correction. Please distinguish an ingredient from a prepared product: a plain food and a seasoned dish may need different advice. You do not need to send your cat’s medical records or other personal documents.</p>
@@ -373,7 +436,7 @@ def terms():
            f"""<h1>Terms of Service</h1><p>Last updated: {DATES['/terms/']}</p>
 <p>These terms apply to {e(NAME)} ({e(URL)}) and to digital products sold through it. The site is operated by {SELLER}. Contact: {contact_p()}.</p>
 <h2>Free tools and information</h2><p>The calculators, guides and articles are free and provided for general information only. They are not veterinary advice. Always ask your veterinarian about your cat's health, and contact a vet or pet poison hotline in an emergency.</p>
-<h2>Digital products</h2><p>The Cat Care Planner is {PLANNER_STATUS}. No orders or pre-orders are currently accepted. Any future sale will identify the payment provider and delivery terms before checkout. No physical item is shipped.</p>
+<h2>Digital products</h2><p>Digital products listed in the <a href="{rel('/shop/')}">shop</a> are sold as file downloads. Checkout is handled by Creem on Creem's checkout pages, which open from the Get it buttons. No physical item is shipped. Each product page states the price, what is included, and the license that applies.</p>
 <h2>License</h2><p>When you buy a product you get a personal, non-transferable license to download, print and use it for your own household as many times as you like. You may not resell, share, redistribute or claim the files as your own.</p>
 <h2>Refunds</h2><p>See our <a href="{rel('/refund-policy/')}">Refund Policy</a>.</p>
 <h2>Liability</h2><p>The site and products are provided "as is". To the extent permitted by law, we are not liable for indirect or consequential losses arising from using the site or products. Nothing in these terms limits rights you have under consumer protection laws that apply to you.</p>
@@ -381,8 +444,8 @@ def terms():
 
 def refund():
     layout("/refund-policy/", f"Refund Policy | {NAME}", f"Refund policy for {NAME} digital products.",
-           f"""<h1>Refund Policy</h1><p>Last updated: {DATES['/refund-policy/']}</p><p>Cat Care Planner: {PLANNER_STATUS}. The terms below describe the intended policy for future sales; no orders are currently accepted.</p>
-<p>Our products are digital downloads, so we can't take them back once they are delivered. We still want you to be happy with your purchase.</p>
+           f"""<h1>Refund Policy</h1><p>Last updated: {DATES['/refund-policy/']}</p>
+<p>This policy applies to digital products purchased from the <a href="{rel('/shop/')}">shop</a> through Creem. Our products are file downloads, so we can't take them back once they are delivered. We still want you to be happy with your purchase.</p>
 <h2>When you can get a refund</h2><p>Within <strong>14 days</strong> of purchase, you can ask for a full refund if:</p>
 <ul><li>the file is defective, such as corrupted, won't open or is missing pages, and we can't fix it by sending you a working copy; or</li><li>the product is materially not as described on its product page.</li></ul>
 <h2>How to request one</h2><p>Email {contact_p()} with your order number and a short description of the problem, plus a screenshot if you can. We usually reply within 2 business days. Approved refunds go back to your original payment method through our payment provider.</p>
@@ -398,49 +461,81 @@ def privacy():
            f"""<h1>Privacy Policy</h1><p>Last updated: {DATES['/privacy/']}</p><p>This site is operated by {SELLER}.</p>
 <h2>Tools</h2><p>All calculators run in your browser. We do not ask for accounts and do not store what you type into the tools on our servers.</p>
 <h2>Hosting</h2><p>The site is hosted on GitHub Pages, which may log basic technical data such as IP addresses for security. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</p>
-<h2>Purchases</h2><p>The Cat Care Planner is {PLANNER_STATUS}; this site currently accepts no orders. Payment-provider and purchase-data details will be supplied before any future sale.</p>
+<h2>Purchases</h2><p>If you buy a digital product from the <a href="{rel('/shop/')}">shop</a>, checkout and payment are handled by Creem. Creem may collect the payment and contact details needed to complete the order and deliver the files. See the privacy policy on Creem's website for how they use that data. We may receive order information needed to answer support questions and process refunds.</p>
 <h2>Emails</h2><p>If you email us, we use your address only to reply and to keep a record of the conversation as needed to help you.</p>{ads}{aff}
 <h2>Your choices</h2><p>You can ask us to access or delete the personal data we hold about you by emailing {contact_p()}. You can also control browser cookies through your browser settings; blocking cookies may affect ad personalization and some site features.</p>""")
 
-PLANNER = ["Cat Profile: microchip, breed, food, likes and quirks, with a photo spot", "Emergency Contacts, with the US pet poison hotline numbers already printed",
-  "Vet Visit Log, plus a Vaccination & Flea/Worm Prevention Record", "Weight Tracker, plus a 12-month Weight Chart grid",
-  "Weekly Daily Feeding Log and Water & Litter Box Log", "Undated Monthly Calendar", "Medication Tracker", "Daily Health Check (14 quick checks, Mon–Sun)",
-  '"When to Call the Vet" warning-signs page', "Grooming & Dental Log", "New Food & Treat Trial Log", "Monthly Expenses Tracker and Yearly Budget Summary",
-  "Toxic Foods Quick Reference (Never / Caution / Generally Safe) — draft wording still needs a final check before release",
-  "Toxic Plants & Household Hazards (lilies, medicines, essential oils and more)",
-  "Pet Sitter Info Sheet", "Dotted Notes page"]
+def shop():
+    cards = "".join(shop_card(p) for p in PRODUCTS)
+    body = f"""<h1>Shop</h1>
+<p class="lead">Digital downloads from CatCalc: printable cat pages and AI video templates. Checkout opens on Creem in a new tab. No physical item ships.</p>
+<div class="grid shop-grid">{cards}</div>"""
+    layout("/shop/", f"Shop | {NAME}", "Digital downloads from CatCalc: a cat care planner, memory book, Pumpkin Cat wallpapers and 2027 calendar, and AI video templates.", body,
+           {"@context": "https://schema.org", "@type": "WebPage", "name": f"{NAME} Shop", "url": URL + "/shop/"})
 
-def planner():
-    imgs = ""
-    for i, (stem, alt) in enumerate([
-        ("01-cover-coming-soon", "Cat Care Planner cover and cat profile page, coming soon"),
-        ("02-inside", "Planner pages for vet visits, weight tracking, feeding and a calendar"),
-        ("03-toxic-foods", "Draft planner reference pages about foods and household hazards for cats")]):
-        base = rel('/assets/img/' + stem)
-        if i == 2:
-            imgs += f'<aside class="box preview-warning"><strong>Outdated draft reference — not feeding advice.</strong><p>Cooked bones: do not feed. Raw fish and eggs: cook first. Cat-specific evidence for grapes, raisins and xylitol is limited. Use the <a href="{rel("/can-cats-eat/")}">updated food guide</a> for the current conclusions. This original preview has not been rewritten as a new PDF page.</p></aside>'
-        imgs += f'<a href="{base}.jpg" aria-label="View full-size preview: {e(alt)}"><picture><source type="image/webp" srcset="{base}-480.webp 480w, {base}-800.webp 800w, {base}-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), 436px"><img src="{base}.jpg" alt="{e(alt)}" width="1200" height="1200" loading="{"eager" if i == 0 else "lazy"}" decoding="async"></picture></a>'
-    lis = "".join(f"<li>{e(x)}</li>" for x in PLANNER)
-    schema = {"@context": "https://schema.org", "@type": "WebPage", "url": URL + "/cat-care-planner/", "name": "Cat Care Planner – Printable PDF (Pumpkin Cat Edition)",
-              "image": [URL + "/assets/img/01-cover-coming-soon.jpg"], "description": PLANNER_STATUS + ". Preview of a planned 22-page printable care tracker. Not for sale yet."}
-    body = f"""<p class="crumbs"><a href="{rel('/')}">Home</a> › Planner preview (not for sale)</p>
-<div class="prod"><div class="gallery">{imgs}</div><div class="buy">
-<h1>Cat Care Planner – Printable Cat Health, Vet &amp; Feeding Tracker</h1>
-<p class="lead">Keep vet visits, vaccines, weight, meds and expenses for your cat in one cute, organized place.</p>
-<p class="price">Coming soon</p>
-<p><strong>{PLANNER_STATUS}</strong>. Honest preview only — no purchase, pre-order, or paid waitlist is open while our store finishes review.</p>
-<p class="small">22 pages · US Letter (8.5 × 11 in) + A4 · undated · personal-use license · no physical item ships</p>
+def product_pages():
+    for product in PRODUCTS:
+        gallery = cover_picture(product, eager=True, sizes="(max-width: 760px) calc(100vw - 36px), 436px")
+        for stem, alt, w, h in product.get("previews", []):
+            if stem == "03-toxic-foods":
+                gallery += (
+                    f'<aside class="box preview-warning"><strong>Current food-safety guide</strong>'
+                    f'<p>The Toxic Foods page in the PDF is a quick household reference and can differ from this website. '
+                    f'Cooked bones appear there under “Caution / tiny amounts”; the current '
+                    f'<a href="{rel("/can-cats-eat/")}">Can cats eat…?</a> guide says do not feed cooked bones. '
+                    f'Use that guide for the current conclusions on this site.</p></aside>'
+                )
+            gallery += preview_picture(stem, alt, w, h)
+        includes = "".join(f"<li>{e(x)}</li>" for x in product["includes"])
+        details = "".join(f"<li>{e(x)}</li>" for x in product["details"])
+        details += f'<li>Refunds: <a href="{rel("/refund-policy/")}">Refund Policy</a></li>'
+        audience = ""
+        if product.get("audience"):
+            audience = "<h2>Who it's for</h2><ul>" + "".join(f"<li>{e(x)}</li>" for x in product["audience"]) + "</ul>"
+        if product.get("not_for"):
+            audience += "<h2>Who it's not for</h2><ul>" + "".join(f"<li>{e(x)}</li>" for x in product["not_for"]) + "</ul>"
+        about = "".join(f"<p>{e(para)}</p>" for para in product["about"])
+        subtitle = f'<p class="lead">{e(product["subtitle"])}</p>' if product.get("subtitle") else ""
+        ai = f'<h2>AI disclosure</h2><p>{e(product["ai_disclosure"])}</p>' if product.get("ai_disclosure") else ""
+        license_p = f'<h2>License</h2><p>{e(product["license"])}</p>' if product.get("license") else ""
+        disclaimer = f'<p class="small">{e(product["disclaimer"])}</p>' if product.get("disclaimer") else ""
+        extra = ""
+        if product["path"] == "/cat-care-planner/":
+            extra = (
+                f'<h2>Why a paper-friendly tracker still helps</h2>'
+                f'<p>Phone notes scatter. A single undated packet lets pet sitters, partners and clinics see the same vaccine dates, weight trend and medication list. '
+                f'You can also use the free tools on this site—especially the <a href="{rel("/cat-calorie-calculator/")}">calorie calculator</a> and '
+                f'<a href="{rel("/guides/senior-cat-weight-and-appetite/")}">senior weight guide</a>—alongside the planner.</p>'
+            )
+        crumbs = f'<p class="crumbs"><a href="{rel("/")}">Home</a> › <a href="{rel("/shop/")}">Shop</a> › {e(product["title"])}</p>'
+        body = f"""{crumbs}
+<div class="prod"><div class="gallery">{gallery}</div><div class="buy">
+<h1>{e(product["title"])}</h1>
+{subtitle}
+<p class="price">{e(product["price_label"])}</p>
+<p>{e(product["short"])}</p>
+{buy_btn(product)}
+<p class="small">Checkout opens on Creem in a new tab. Digital file only; no physical item ships.</p>
 </div></div>
-<h2>About this planner</h2><p>Your cat can't tell you when something's off, but a written record can. The Cat Care Planner (Pumpkin Cat Edition) is a 22-page printable PDF that keeps all of your cat's health and care information in one place, so vet visits are easier and small changes don't slip by.</p>
-<p>Print it at home, put it in a binder, or use it in GoodNotes or any PDF app. The planned formats are US Letter and A4. Preview pages below are drafts, not a delivered product. Food-risk wording in the PDF previews still needs checking against the revised website before release.</p>
-<h2>What's inside</h2><ul>{lis}</ul>
-<h2>Why a paper-friendly tracker still helps</h2>
-<p>Phone notes scatter. A single undated packet lets pet sitters, partners and clinics see the same vaccine dates, weight trend and medication list. Until the PDF goes on sale, you can still use free tools on this site—especially the <a href="{rel('/cat-calorie-calculator/')}">calorie calculator</a> and <a href="{rel('/guides/senior-cat-weight-and-appetite/')}">senior weight guide</a>—and keep a simple notebook with the same fields.</p>
-<h2>Details</h2><ul><li>Status: {PLANNER_STATUS}</li><li>Planned format: ZIP file with 2 PDFs (US Letter and A4)</li><li>Delivery: not yet available; no orders accepted</li><li>Intended license: personal use</li><li>Future sales policy: <a href="{rel('/refund-policy/')}">Refund Policy</a></li></ul>
-<h2>Get notified</h2>
-<p>We are not collecting emails on this page. Check back here for launch updates — when a sale opens, this preview page will be updated.</p>
-<p class="small">This planner is an organizing tool, not veterinary advice.</p>"""
-    layout("/cat-care-planner/", "Cat Care Planner Preview – Coming Soon", "Coming soon / not yet available. Preview the planned Cat Care Planner PDF for feeding, weight and care records. No purchases or pre-orders accepted.", body, schema, noindex=True)
+<h2>About</h2>{about}
+<h2>What's included</h2><ul>{includes}</ul>
+{audience}
+{extra}
+<h2>Details</h2><ul>{details}</ul>
+{license_p}
+{ai}
+{disclaimer}"""
+        share = URL + "/assets/img/shop/" + product["cover"] + ".jpg"
+        layout(
+            product["path"],
+            f'{product["title"]} | {NAME}',
+            product["meta"],
+            body,
+            product_schema(product),
+            share_image=share,
+            share_alt=product["cover_alt"],
+            share_size=(product["cover_w"], product["cover_h"]),
+        )
 
 def guides():
     cards = "".join(
@@ -475,7 +570,7 @@ def assets():
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for f in ("style.css", "tools.js"):
         shutil.copy(os.path.join(ROOT, "src", f), os.path.join(OUT, "assets", f))
-    shutil.copytree(os.path.join(ROOT, "src", "img"), os.path.join(OUT, "assets", "img"), ignore=shutil.ignore_patterns('01-cover.jpg', '*.md'))
+    shutil.copytree(os.path.join(ROOT, "src", "img"), os.path.join(OUT, "assets", "img"), ignore=shutil.ignore_patterns('01-cover.jpg', '*coming-soon*', '*.md'))
 
 def seo_files():
     sm = "".join(f"<url><loc>{e(u)}</loc>" + (f"<lastmod>{date}</lastmod>" if date else "") + "</url>" for u, date in pages)
@@ -493,5 +588,5 @@ def seo_files():
 if __name__ == "__main__":
     if os.path.exists(OUT): shutil.rmtree(OUT)
     os.makedirs(OUT)
-    home(); age(); calories(); foods(); namesp(); guides(); about(); contact(); terms(); refund(); privacy(); planner(); assets(); seo_files()
+    home(); age(); calories(); foods(); namesp(); guides(); about(); contact(); terms(); refund(); privacy(); shop(); product_pages(); assets(); seo_files()
     print(f"Built {len(pages)} pages into {OUT}")

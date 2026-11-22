@@ -107,10 +107,16 @@ for file in sorted(OUT.rglob('*.html')):
         require(short in page.json[0]['mainEntity'][0]['acceptedAnswer']['text'], 'FAQ conclusion drift')
         require(page.title.endswith(label) and descs == [short], 'metadata conclusion drift')
         require(short.replace('&','&amp;') in doc,'visible conclusion drift')
-    if path == '/cat-care-planner/':
+    if path.startswith('/shop/') and path != '/shop/' or path == '/cat-care-planner/':
         require(page.tags['img'][0]['loading'] == 'eager', 'first product image lazy')
-        require('offers' not in page.json[0], 'product must not have Offer')
-        require(any(m.get('name')=='robots' and 'noindex' in m.get('content','') for m in page.tags['meta']), 'planner should be noindex')
+        require(page.json and page.json[0].get('@type') == 'Product', 'product page needs Product JSON-LD')
+        offer = (page.json[0] or {}).get('offers') or {}
+        require(offer.get('@type') == 'Offer', 'Product JSON-LD needs a complete Offer')
+        require(bool(offer.get('price')) and offer.get('priceCurrency') == 'USD', 'Offer needs price and USD currency')
+        require('InStock' in str(offer.get('availability','')), 'Offer needs InStock availability')
+        require(bool(offer.get('url')), 'Offer needs a url')
+    if path in ('/shop/', '/cat-care-planner/') or path.startswith('/shop/'):
+        require(not re.search(r'Coming soon|not yet available|not for sale|no purchase, pre-order', doc, re.I), 'coming-soon copy still present')
 
 for kind, counter in [('title',titles),('description',descriptions)]:
     for value, count in counter.items():
@@ -120,7 +126,16 @@ for path, sources in inbound.items():
 
 ns = {'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 urls = ET.parse(OUT/'sitemap.xml').getroot().findall('s:url',ns)
-if len(urls) != 57 or len(pages) != 59: errors.append(f'expected 57 sitemap URLs and 59 HTML files (planner noindex), got {len(urls)} and {len(pages)}')
+indexed = [path for path in pages if path != '/404.html']
+if len(urls) != len(indexed) or len(pages) != len(indexed) + 1:
+    errors.append(f'expected sitemap to list every HTML page except 404, got {len(urls)} URLs and {len(pages)} HTML files')
+shop_paths = ['/shop/', '/shop/ai-video-prompt-templates/', '/shop/ai-video-storyboard-pack/', '/shop/cat-memory-book/', '/shop/pumpkin-cat-wallpapers/', '/shop/pumpkin-cat-calendar-2027/', '/cat-care-planner/']
+sitemap_paths = {entry.find('s:loc',ns).text.removeprefix(SITE) for entry in urls}
+for path in shop_paths:
+    if path not in sitemap_paths:
+        errors.append(f'{path}: missing from sitemap')
+    if path not in pages:
+        errors.append(f'{path}: missing HTML page')
 for entry in urls:
     path = entry.find('s:loc',ns).text.removeprefix(SITE)
     date = entry.find('s:lastmod',ns)

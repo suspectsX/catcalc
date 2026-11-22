@@ -107,18 +107,43 @@ def placeholder(name):
         canvas.resize((width,round(size[1]*width/size[0])),Image.Resampling.LANCZOS).save(ART/f'{name}-{width}.webp',quality=82)
 
 
+SHOP_COVERS = [
+    ('prompt-pack-cover', Path('/workspace/prompt-pack-en/assets/cover_1600x1200.jpg')),
+    ('storyboard-pack-cover', Path('/workspace/digital-products/storyboard-template-pack/assets/cover_art.jpg')),
+    ('memory-book-cover', Path('/workspace/digital-products/cat-memory-book/previews/01-cover.png')),
+    ('wallpapers-cover', Path('/workspace/digital-products/pumpkin-wallpapers/previews/01-cover.png')),
+    ('calendar-cover', Path('/workspace/digital-products/pumpkin-calendar-2027/previews/01-cover.png')),
+    ('planner-cover', Path('/workspace/digital-products/cat-care-planner/previews/01-cover.png')),
+]
+
+
+def export_shop_covers():
+    shop = IMG / 'shop'
+    shop.mkdir(exist_ok=True)
+    for stem, src in SHOP_COVERS:
+        with Image.open(src) as image:
+            image = image.convert('RGB')
+            width, height = image.size
+            if width > 1200:
+                master = image.resize((1200, round(height * 1200 / width)), Image.Resampling.LANCZOS)
+            else:
+                master = image.copy()
+            master.save(shop / f'{stem}.jpg', quality=85, optimize=True)
+            for size in (480, 800, 1200):
+                if size == 1200:
+                    frame = master
+                else:
+                    rw = min(size, width)
+                    frame = image.resize((rw, max(1, round(height * rw / width))), Image.Resampling.LANCZOS)
+                frame.save(shop / f'{stem}-{size}.webp', quality=86, method=6)
+
+
 def export_products():
-    # Keep the actual page-preview pixels from the original JPG. Retain only
-    # imagegen's edited sales badge, never its re-rendered PDF page content.
-    with Image.open(IMG/'01-cover.jpg') as original:
-        cover = original.convert('RGB')
-        with Image.open(ROOT/'scripts/assets/cover-status-label.png') as badge:
-            cover.paste(badge, (760,1045))
-        cover.save(IMG/'01-cover-coming-soon.jpg',quality=95)
-    for stem in ('01-cover-coming-soon','02-inside','03-toxic-foods'):
+    export_shop_covers()
+    for stem in ('02-inside', '03-toxic-foods'):
         with Image.open(IMG/f'{stem}.jpg') as image:
-            for width in (480,800,1200):
-                image.resize((width,width),Image.Resampling.LANCZOS).save(IMG/f'{stem}-{width}.webp',quality=90,method=6)
+            for width in (480, 800, 1200):
+                image.resize((width, width), Image.Resampling.LANCZOS).save(IMG/f'{stem}-{width}.webp', quality=90, method=6)
 
 
 if __name__ == '__main__':
@@ -127,4 +152,4 @@ if __name__ == '__main__':
         if not final_art(name):
             placeholder(name)
     export_products()
-    print('Prepared 8 illustrations (final art where available) and 9 product WebP sources.')
+    print('Prepared 8 illustrations (final art where available), shop covers, and planner preview WebP sources.')

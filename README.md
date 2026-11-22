@@ -4,11 +4,11 @@
 
 ## 页面与内容
 
-共 **58 个常规页面 + 1 个 404**：首页、年龄计算器、热量/食量计算器、猫名生成器、食物索引、41 个食物详情、Guides 索引与 5 篇原创指南、Planner 预览、About、Contact、Terms、Privacy、Refund Policy。sitemap 只收录 58 个常规页面。
+共 **64 个常规页面 + 1 个 404**：首页、年龄计算器、热量/食量计算器、猫名生成器、食物索引、41 个食物详情、Guides 索引与 5 篇原创指南、Shop 列表、6 个商品页（含 /cat-care-planner/）、About、Contact、Terms、Privacy、Refund Policy。sitemap 收录全部常规页面。
 
 - 食物页用逐项风险标签、简短结论、准备/处理建议和来源；毒性、机械伤害、营养限制和证据有限分别表达。内容未经过兽医审核，不能替代个体诊疗。
 - 年龄为非临床近似换算；生命阶段定义单独引用 AAHA/AAFP。热量为 RER 起点估算，零食计入每日总量。
-- Planner 目前统一为 **Coming soon / not yet available**，无购买或预订功能，Product 数据不包含 Offer。预览内页仍须与真实 PDF 和更新后的食品风险文字核对。
+- Shop 展示 6 个已在售的 Creem 数字商品。每个商品页使用带完整 Offer（price、priceCurrency USD、availability InStock、url）的 Product JSON-LD。Cat Care Planner 的食品风险预览页仍指向站内 /can-cats-eat/ 作为当前指南。
 - FAQ 为可见内容和语义标记保留，不把富媒体展示或流量作为收益承诺。
 
 ## 构建与本地检查
@@ -37,7 +37,7 @@ python build.py
 ```
 
 - 八幅插图为简单几何占位 WebP，源文件在 `src/img/illustrations/`；首页主图为 600×300 / 1200×600，工具图为 480×270 / 960×540，按审查报告 3.2 的尺寸接入。
-- 商品图为 480/800/1200 正方形 WebP，JPG 回退及原图查看入口保留。原封面 `src/img/01-cover.jpg` 保留作为源档，不复制到公开目录；只在底部销售徽标区域贴上 Coming soon，内页像素来自原 JPG。徽标来源和图片限制见 `src/img/illustrations/README.md`。
+- 商品封面在 `src/img/shop/`，导出为 JPG 与 480/800/1200 WebP。Planner 内页预览 `02-inside`、`03-toxic-foods` 仍保留。原封面 `src/img/01-cover.jpg` 留作源档，不复制到公开目录。
 - `src/content_dates.json` 记录固定内容日期；仅实质内容修改时手动更新对应项。食物通配日期表示本次共同修订；未来单页日期可以用精确路径覆盖。缺少可靠日期时可省略 lastmod。政策条文没改就不要改日期。
 
 ## 配置与部署
